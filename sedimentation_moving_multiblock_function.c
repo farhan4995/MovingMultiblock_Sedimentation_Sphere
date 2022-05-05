@@ -2408,56 +2408,58 @@ void interpolation_fine_boundary(double *ff, double *feqf, double *fneqf_b, doub
     }
     if (side == 2)
     {
-        for (k = 0, i = face; k <= nz; k += alpha)
-        {
-            for (j = 0; j <= ny; j += alpha)
-            {
-                l = 0.0;
-                m = 0.0;
-                n = 0.0;
-                p = 0.0;
+        // for (k = 0, i = face; k <= nz; k += alpha)
+        // {
+        //     for (j = 0; j <= ny; j += alpha)
+        //     {
+        //         l = 0.0;
+        //         m = 0.0;
+        //         n = 0.0;
+        //         p = 0.0;
 
-                for (a = 0; a < 19; a++)
-                {
-                    l += ff[fineindex(i, j, k, a)];
-                    m += ex[a] * ff[fineindex(i, j, k, a)];
-                    n += ey[a] * ff[fineindex(i, j, k, a)];
-                    p += ez[a] * ff[fineindex(i, j, k, a)];
-                }
-                rhof[fineisnindex1(i, j, k)] = l;
-                jxf[fineisnindex1(i, j, k)] = m / rhof[fineisnindex1(i, j, k)];
-                jyf[fineisnindex1(i, j, k)] = n / rhof[fineisnindex1(i, j, k)];
-                jzf[fineisnindex1(i, j, k)] = p / rhof[fineisnindex1(i, j, k)];
+        //         for (a = 0; a < 19; a++)
+        //         {
+        //             l += ff[fineindex(i, j, k, a)];
+        //             m += ex[a] * ff[fineindex(i, j, k, a)];
+        //             n += ey[a] * ff[fineindex(i, j, k, a)];
+        //             p += ez[a] * ff[fineindex(i, j, k, a)];
+        //         }
+        //         rhof[fineisnindex1(i, j, k)] = l;
+        //         jxf[fineisnindex1(i, j, k)] = m / rhof[fineisnindex1(i, j, k)];
+        //         jyf[fineisnindex1(i, j, k)] = n / rhof[fineisnindex1(i, j, k)];
+        //         jzf[fineisnindex1(i, j, k)] = p / rhof[fineisnindex1(i, j, k)];
 
-                u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+        //         u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
-                for (a = 0; a < 19; a++)
-                {
-                    t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                    feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                    fneqf_r[leftright(j, k, a)] = ff[fineindex(i, j, k, a)] - feqf[fineindex(i, j, k, a)];
-                }
-            }
-        }
+        //         for (a = 0; a < 19; a++)
+        //         {
+        //             t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+        //             feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+        //             fneqf_r[leftright(j, k, a)] = ff[fineindex(i, j, k, a)] - feqf[fineindex(i, j, k, a)];
+        //         }
+        //     }
+        // }
 
         for (i = face, k = 0; k <= nz; k += alpha)
         {
             for (j = 3; j <= ny - 3; j += alpha)
             {
-                jxf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jxf[fineisnindex1(i, j + 1, k)] + jxf[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (jxf[fineisnindex1(i, j + 3, k)] + jxf[fineisnindex1(i, j - 3, k)]);
-                jyf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jyf[fineisnindex1(i, j + 1, k)] + jyf[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (jyf[fineisnindex1(i, j + 3, k)] + jyf[fineisnindex1(i, j - 3, k)]);
-                jzf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jzf[fineisnindex1(i, j + 1, k)] + jzf[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (jzf[fineisnindex1(i, j + 3, k)] + jzf[fineisnindex1(i, j - 3, k)]);
-                rhof[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (rhof[fineisnindex1(i, j + 1, k)] + rhof[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (rhof[fineisnindex1(i, j + 3, k)] + rhof[fineisnindex1(i, j - 3, k)]);
+                // jxf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jxf[fineisnindex1(i, j + 1, k)] + jxf[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (jxf[fineisnindex1(i, j + 3, k)] + jxf[fineisnindex1(i, j - 3, k)]);
+                // jyf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jyf[fineisnindex1(i, j + 1, k)] + jyf[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (jyf[fineisnindex1(i, j + 3, k)] + jyf[fineisnindex1(i, j - 3, k)]);
+                // jzf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jzf[fineisnindex1(i, j + 1, k)] + jzf[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (jzf[fineisnindex1(i, j + 3, k)] + jzf[fineisnindex1(i, j - 3, k)]);
+                // rhof[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (rhof[fineisnindex1(i, j + 1, k)] + rhof[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (rhof[fineisnindex1(i, j + 3, k)] + rhof[fineisnindex1(i, j - 3, k)]);
 
-                u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+                // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
                 for (a = 0; a < 19; a++)
                 {
-                    fneqf_r[leftright(j, k, a)] = (9.0 / 16.0) * (fneqf_r[leftright(j + 1, k, a)] + fneqf_r[leftright(j - 1, k, a)]) - (1.0 / 16.0) * (fneqf_r[leftright(j + 3, k, a)] + fneqf_r[leftright(j - 3, k, a)]);
+                    // fneqf_r[leftright(j, k, a)] = (9.0 / 16.0) * (fneqf_r[leftright(j + 1, k, a)] + fneqf_r[leftright(j - 1, k, a)]) - (1.0 / 16.0) * (fneqf_r[leftright(j + 3, k, a)] + fneqf_r[leftright(j - 3, k, a)]);
 
-                    t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                    feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                    ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_r[leftright(j, k, a)];
+                    // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                    // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                    // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_r[leftright(j, k, a)];
+
+                    ff[fineindex(i, j, k, a)] = (9.0 / 16.0) * (ff[fineindex(i, j + 1, k, a)] + ff[fineindex(i, j - 1, k, a)]) - (1.0 / 16.0) * (ff[fineindex(i, j + 3, k, a)] + ff[fineindex(i, j - 3, k, a)]);
                 }
             }
         }
@@ -2466,20 +2468,22 @@ void interpolation_fine_boundary(double *ff, double *feqf, double *fneqf_b, doub
         {
             for (k = 3; k <= nz - 3; k += alpha)
             {
-                jxf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jxf[fineisnindex1(i, j, k + 1)] + jxf[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (jxf[fineisnindex1(i, j, k + 3)] + jxf[fineisnindex1(i, j, k - 3)]);
-                jyf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jyf[fineisnindex1(i, j, k + 1)] + jyf[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (jyf[fineisnindex1(i, j, k + 3)] + jyf[fineisnindex1(i, j, k - 3)]);
-                jzf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jzf[fineisnindex1(i, j, k + 1)] + jzf[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (jzf[fineisnindex1(i, j, k + 3)] + jzf[fineisnindex1(i, j, k - 3)]);
-                rhof[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (rhof[fineisnindex1(i, j, k + 1)] + rhof[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (rhof[fineisnindex1(i, j, k + 3)] + rhof[fineisnindex1(i, j, k - 3)]);
+                // jxf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jxf[fineisnindex1(i, j, k + 1)] + jxf[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (jxf[fineisnindex1(i, j, k + 3)] + jxf[fineisnindex1(i, j, k - 3)]);
+                // jyf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jyf[fineisnindex1(i, j, k + 1)] + jyf[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (jyf[fineisnindex1(i, j, k + 3)] + jyf[fineisnindex1(i, j, k - 3)]);
+                // jzf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jzf[fineisnindex1(i, j, k + 1)] + jzf[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (jzf[fineisnindex1(i, j, k + 3)] + jzf[fineisnindex1(i, j, k - 3)]);
+                // rhof[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (rhof[fineisnindex1(i, j, k + 1)] + rhof[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (rhof[fineisnindex1(i, j, k + 3)] + rhof[fineisnindex1(i, j, k - 3)]);
 
-                u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+                // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
                 for (a = 0; a < 19; a++)
                 {
-                    fneqf_r[leftright(j, k, a)] = (9.0 / 16.0) * (fneqf_r[leftright(j, k + 1, a)] + fneqf_r[leftright(j, k - 1, a)]) - (1.0 / 16.0) * (fneqf_r[leftright(j, k + 3, a)] + fneqf_r[leftright(j, k - 3, a)]);
+                    // fneqf_r[leftright(j, k, a)] = (9.0 / 16.0) * (fneqf_r[leftright(j, k + 1, a)] + fneqf_r[leftright(j, k - 1, a)]) - (1.0 / 16.0) * (fneqf_r[leftright(j, k + 3, a)] + fneqf_r[leftright(j, k - 3, a)]);
 
-                    t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                    feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                    ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_r[leftright(j, k, a)];
+                    // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                    // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                    // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_r[leftright(j, k, a)];
+
+                    ff[fineindex(i, j, k, a)] = (9.0 / 16.0) * (ff[fineindex(i, j, k + 1, a)] + ff[fineindex(i, j, k - 1, a)]) - (1.0 / 16.0) * (ff[fineindex(i, j, k + 3, a)] + ff[fineindex(i, j, k - 3, a)]);
                 }
             }
         }
@@ -2490,39 +2494,43 @@ void interpolation_fine_boundary(double *ff, double *feqf, double *fneqf_b, doub
             i = face;
             j = 1;
 
-            jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j + 3, k)];
-            jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j + 3, k)];
-            jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j + 3, k)];
-            rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j + 3, k)];
+            // jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j + 3, k)];
+            // jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j + 3, k)];
+            // jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j + 3, k)];
+            // rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j + 3, k)];
 
-            u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+            // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
             for (a = 0; a < 19; a++)
             {
-                fneqf_r[leftright(j, k, a)] = (3.0 / 8.0) * fneqf_r[leftright(j - 1, k, a)] + (3.0 / 4.0) * fneqf_r[leftright(j + 1, k, a)] - (1.0 / 8.0) * fneqf_r[leftright(j + 3, k, a)];
+                // fneqf_r[leftright(j, k, a)] = (3.0 / 8.0) * fneqf_r[leftright(j - 1, k, a)] + (3.0 / 4.0) * fneqf_r[leftright(j + 1, k, a)] - (1.0 / 8.0) * fneqf_r[leftright(j + 3, k, a)];
 
-                t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_r[leftright(j, k, a)];
+                // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_r[leftright(j, k, a)];
+
+                ff[fineindex(i, j, k, a)] = (3.0 / 8.0) * ff[fineindex(i, j - 1, k, a)] + (3.0 / 4.0) * ff[fineindex(i, j + 1, k, a)] - (1.0 / 8.0) * ff[fineindex(i, j + 3, k, a)];
             }
 
             i = face;
             j = ny - 1;
 
-            jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j - 3, k)];
-            jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j - 3, k)];
-            jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j - 3, k)];
-            rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j - 3, k)];
+            // jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j - 3, k)];
+            // jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j - 3, k)];
+            // jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j - 3, k)];
+            // rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j - 3, k)];
 
-            u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+            // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
             for (a = 0; a < 19; a++)
             {
-                fneqf_r[leftright(j, k, a)] = (3.0 / 8.0) * fneqf_r[leftright(j + 1, k, a)] + (3.0 / 4.0) * fneqf_r[leftright(j - 1, k, a)] - (1.0 / 8.0) * fneqf_r[leftright(j - 3, k, a)];
+                // fneqf_r[leftright(j, k, a)] = (3.0 / 8.0) * fneqf_r[leftright(j + 1, k, a)] + (3.0 / 4.0) * fneqf_r[leftright(j - 1, k, a)] - (1.0 / 8.0) * fneqf_r[leftright(j - 3, k, a)];
 
-                t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_r[leftright(j, k, a)];
+                // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_r[leftright(j, k, a)];
+
+                ff[fineindex(i, j, k, a)] = (3.0 / 8.0) * ff[fineindex(i, j + 1, k, a)] + (3.0 / 4.0) * ff[fineindex(i, j - 1, k, a)] - (1.0 / 8.0) * ff[fineindex(i, j - 3, k, a)];
             }
         }
         for (j = 0; j <= ny; j += alpha)
@@ -2530,94 +2538,99 @@ void interpolation_fine_boundary(double *ff, double *feqf, double *fneqf_b, doub
             i = face;
             k = 1;
 
-            jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j, k + 3)];
-            jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j, k + 3)];
-            jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j, k + 3)];
-            rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j, k + 3)];
+            // jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j, k + 3)];
+            // jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j, k + 3)];
+            // jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j, k + 3)];
+            // rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j, k + 3)];
 
-            u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+            // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
             for (a = 0; a < 19; a++)
             {
-                fneqf_r[leftright(j, k, a)] = (3.0 / 8.0) * fneqf_r[leftright(j, k - 1, a)] + (3.0 / 4.0) * fneqf_r[leftright(j, k + 1, a)] - (1.0 / 8.0) * fneqf_r[leftright(j, k + 3, a)];
+                // fneqf_r[leftright(j, k, a)] = (3.0 / 8.0) * fneqf_r[leftright(j, k - 1, a)] + (3.0 / 4.0) * fneqf_r[leftright(j, k + 1, a)] - (1.0 / 8.0) * fneqf_r[leftright(j, k + 3, a)];
 
-                t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_r[leftright(j, k, a)];
+                // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_r[leftright(j, k, a)];
+
+                ff[fineindex(i, j, k, a)] = (3.0 / 8.0) * ff[fineindex(i, j, k - 1, a)] + (3.0 / 4.0) * ff[fineindex(i, j, k + 1, a)] - (1.0 / 8.0) * ff[fineindex(i, j, k + 3, a)];
             }
 
             i = face;
             k = nz - 1;
 
-            jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j, k - 3)];
-            jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j, k - 3)];
-            jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j, k - 3)];
-            rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j, k - 3)];
+            // jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j, k - 3)];
+            // jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j, k - 3)];
+            // jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j, k - 3)];
+            // rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j, k - 3)];
 
-            u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+            // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
             for (a = 0; a < 19; a++)
             {
-                fneqf_r[leftright(j, k, a)] = (3.0 / 8.0) * fneqf_r[leftright(j, k + 1, a)] + (3.0 / 4.0) * fneqf_r[leftright(j, k - 1, a)] - (1.0 / 8.0) * fneqf_r[leftright(j, k - 3, a)];
+                // fneqf_r[leftright(j, k, a)] = (3.0 / 8.0) * fneqf_r[leftright(j, k + 1, a)] + (3.0 / 4.0) * fneqf_r[leftright(j, k - 1, a)] - (1.0 / 8.0) * fneqf_r[leftright(j, k - 3, a)];
 
-                t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_r[leftright(j, k, a)];
+                // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_r[leftright(j, k, a)];
+                ff[fineindex(i, j, k, a)] = (3.0 / 8.0) * ff[fineindex(i, j, k + 1, a)] + (3.0 / 4.0) * ff[fineindex(i, j, k - 1, a)] - (1.0 / 8.0) * ff[fineindex(i, j, k - 3, a)];
             }
         }
     }
     if (side == 3)
     {
-        for (i = 0, j = face; i <= nx; i += alpha)
-        {
-            for (k = 0; k <= nz; k += alpha)
-            {
-                l = 0.0;
-                m = 0.0;
-                n = 0.0;
-                p = 0.0;
+        // for (i = 0, j = face; i <= nx; i += alpha)
+        // {
+        //     for (k = 0; k <= nz; k += alpha)
+        //     {
+        //         l = 0.0;
+        //         m = 0.0;
+        //         n = 0.0;
+        //         p = 0.0;
 
-                for (a = 0; a < 19; a++)
-                {
-                    l += ff[fineindex(i, j, k, a)];
-                    m += ex[a] * ff[fineindex(i, j, k, a)];
-                    n += ey[a] * ff[fineindex(i, j, k, a)];
-                    p += ez[a] * ff[fineindex(i, j, k, a)];
-                }
-                rhof[fineisnindex1(i, j, k)] = l;
-                jxf[fineisnindex1(i, j, k)] = m / rhof[fineisnindex1(i, j, k)];
-                jyf[fineisnindex1(i, j, k)] = n / rhof[fineisnindex1(i, j, k)];
-                jzf[fineisnindex1(i, j, k)] = p / rhof[fineisnindex1(i, j, k)];
+        //         for (a = 0; a < 19; a++)
+        //         {
+        //             l += ff[fineindex(i, j, k, a)];
+        //             m += ex[a] * ff[fineindex(i, j, k, a)];
+        //             n += ey[a] * ff[fineindex(i, j, k, a)];
+        //             p += ez[a] * ff[fineindex(i, j, k, a)];
+        //         }
+        //         rhof[fineisnindex1(i, j, k)] = l;
+        //         jxf[fineisnindex1(i, j, k)] = m / rhof[fineisnindex1(i, j, k)];
+        //         jyf[fineisnindex1(i, j, k)] = n / rhof[fineisnindex1(i, j, k)];
+        //         jzf[fineisnindex1(i, j, k)] = p / rhof[fineisnindex1(i, j, k)];
 
-                u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+        //         u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
-                for (a = 0; a < 19; a++)
-                {
-                    t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                    feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                    fneqf_t[topbottom(i, k, a)] = ff[fineindex(i, j, k, a)] - feqf[fineindex(i, j, k, a)];
-                }
-            }
-        }
+        //         for (a = 0; a < 19; a++)
+        //         {
+        //             t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+        //             feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+        //             fneqf_t[topbottom(i, k, a)] = ff[fineindex(i, j, k, a)] - feqf[fineindex(i, j, k, a)];
+        //         }
+        //     }
+        // }
 
         for (j = face, k = 0; k <= nz; k += alpha)
         {
             for (i = 3; i <= nx - 3; i += alpha)
             {
-                jxf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jxf[fineisnindex1(i + 1, j, k)] + jxf[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (jxf[fineisnindex1(i + 3, j, k)] + jxf[fineisnindex1(i - 3, j, k)]);
-                jyf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jyf[fineisnindex1(i + 1, j, k)] + jyf[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (jyf[fineisnindex1(i + 3, j, k)] + jyf[fineisnindex1(i - 3, j, k)]);
-                jzf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jzf[fineisnindex1(i + 1, j, k)] + jzf[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (jzf[fineisnindex1(i + 3, j, k)] + jzf[fineisnindex1(i - 3, j, k)]);
-                rhof[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (rhof[fineisnindex1(i + 1, j, k)] + rhof[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (rhof[fineisnindex1(i + 3, j, k)] + rhof[fineisnindex1(i - 3, j, k)]);
+                // jxf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jxf[fineisnindex1(i + 1, j, k)] + jxf[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (jxf[fineisnindex1(i + 3, j, k)] + jxf[fineisnindex1(i - 3, j, k)]);
+                // jyf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jyf[fineisnindex1(i + 1, j, k)] + jyf[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (jyf[fineisnindex1(i + 3, j, k)] + jyf[fineisnindex1(i - 3, j, k)]);
+                // jzf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jzf[fineisnindex1(i + 1, j, k)] + jzf[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (jzf[fineisnindex1(i + 3, j, k)] + jzf[fineisnindex1(i - 3, j, k)]);
+                // rhof[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (rhof[fineisnindex1(i + 1, j, k)] + rhof[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (rhof[fineisnindex1(i + 3, j, k)] + rhof[fineisnindex1(i - 3, j, k)]);
 
-                u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+                // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
                 for (a = 0; a < 19; a++)
                 {
-                    fneqf_t[topbottom(i, k, a)] = (9.0 / 16.0) * (fneqf_t[topbottom(i + 1, k, a)] + fneqf_t[topbottom(i - 1, k, a)]) - (1.0 / 16.0) * (fneqf_t[topbottom(i + 3, k, a)] + fneqf_t[topbottom(i - 3, k, a)]);
+                    // fneqf_t[topbottom(i, k, a)] = (9.0 / 16.0) * (fneqf_t[topbottom(i + 1, k, a)] + fneqf_t[topbottom(i - 1, k, a)]) - (1.0 / 16.0) * (fneqf_t[topbottom(i + 3, k, a)] + fneqf_t[topbottom(i - 3, k, a)]);
 
-                    t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                    feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                    ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_t[topbottom(i, k, a)];
+                    // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                    // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                    // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_t[topbottom(i, k, a)];
+
+                    ff[fineindex(i, j, k, a)] = (9.0 / 16.0) * (ff[fineindex(i + 1, j, k, a)] + ff[fineindex(i - 1, j, k, a)]) - (1.0 / 16.0) * (ff[fineindex(i + 3, j, k, a)] + ff[fineindex(i - 3, j, k, a)]);
                 }
             }
         }
@@ -2626,20 +2639,22 @@ void interpolation_fine_boundary(double *ff, double *feqf, double *fneqf_b, doub
         {
             for (k = 3; k <= nz - 3; k += alpha)
             {
-                jxf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jxf[fineisnindex1(i, j, k + 1)] + jxf[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (jxf[fineisnindex1(i, j, k + 3)] + jxf[fineisnindex1(i, j, k - 3)]);
-                jyf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jyf[fineisnindex1(i, j, k + 1)] + jyf[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (jyf[fineisnindex1(i, j, k + 3)] + jyf[fineisnindex1(i, j, k - 3)]);
-                jzf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jzf[fineisnindex1(i, j, k + 1)] + jzf[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (jzf[fineisnindex1(i, j, k + 3)] + jzf[fineisnindex1(i, j, k - 3)]);
-                rhof[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (rhof[fineisnindex1(i, j, k + 1)] + rhof[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (rhof[fineisnindex1(i, j, k + 3)] + rhof[fineisnindex1(i, j, k - 3)]);
+                // jxf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jxf[fineisnindex1(i, j, k + 1)] + jxf[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (jxf[fineisnindex1(i, j, k + 3)] + jxf[fineisnindex1(i, j, k - 3)]);
+                // jyf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jyf[fineisnindex1(i, j, k + 1)] + jyf[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (jyf[fineisnindex1(i, j, k + 3)] + jyf[fineisnindex1(i, j, k - 3)]);
+                // jzf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jzf[fineisnindex1(i, j, k + 1)] + jzf[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (jzf[fineisnindex1(i, j, k + 3)] + jzf[fineisnindex1(i, j, k - 3)]);
+                // rhof[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (rhof[fineisnindex1(i, j, k + 1)] + rhof[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (rhof[fineisnindex1(i, j, k + 3)] + rhof[fineisnindex1(i, j, k - 3)]);
 
-                u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+                // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
                 for (a = 0; a < 19; a++)
                 {
-                    fneqf_t[topbottom(i, k, a)] = (9.0 / 16.0) * (fneqf_t[topbottom(i, k + 1, a)] + fneqf_t[topbottom(i, k - 1, a)]) - (1.0 / 16.0) * (fneqf_t[topbottom(i, k + 3, a)] + fneqf_t[topbottom(i, k - 3, a)]);
+                    // fneqf_t[topbottom(i, k, a)] = (9.0 / 16.0) * (fneqf_t[topbottom(i, k + 1, a)] + fneqf_t[topbottom(i, k - 1, a)]) - (1.0 / 16.0) * (fneqf_t[topbottom(i, k + 3, a)] + fneqf_t[topbottom(i, k - 3, a)]);
 
-                    t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                    feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                    ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_t[topbottom(i, k, a)];
+                    // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                    // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                    // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_t[topbottom(i, k, a)];
+
+                    ff[fineindex(i, j, k, a)] = (9.0 / 16.0) * (ff[fineindex(i, j, k + 1, a)] + ff[fineindex(i, j, k - 1, a)]) - (1.0 / 16.0) * (ff[fineindex(i, j, k + 3, a)] + ff[fineindex(i, j, k - 3, a)]);
                 }
             }
         }
@@ -2650,39 +2665,43 @@ void interpolation_fine_boundary(double *ff, double *feqf, double *fneqf_b, doub
             i = 1;
             j = face;
 
-            jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i - 1, j, k)] + (3.0 / 4.0) * jxf[fineisnindex1(i + 1, j, k)] - (1.0 / 8.0) * jxf[fineisnindex1(i + 3, j, k)];
-            jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i - 1, j, k)] + (3.0 / 4.0) * jyf[fineisnindex1(i + 1, j, k)] - (1.0 / 8.0) * jyf[fineisnindex1(i + 3, j, k)];
-            jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i - 1, j, k)] + (3.0 / 4.0) * jzf[fineisnindex1(i + 1, j, k)] - (1.0 / 8.0) * jzf[fineisnindex1(i + 3, j, k)];
-            rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i - 1, j, k)] + (3.0 / 4.0) * rhof[fineisnindex1(i + 1, j, k)] - (1.0 / 8.0) * rhof[fineisnindex1(i + 3, j, k)];
+            // jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i - 1, j, k)] + (3.0 / 4.0) * jxf[fineisnindex1(i + 1, j, k)] - (1.0 / 8.0) * jxf[fineisnindex1(i + 3, j, k)];
+            // jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i - 1, j, k)] + (3.0 / 4.0) * jyf[fineisnindex1(i + 1, j, k)] - (1.0 / 8.0) * jyf[fineisnindex1(i + 3, j, k)];
+            // jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i - 1, j, k)] + (3.0 / 4.0) * jzf[fineisnindex1(i + 1, j, k)] - (1.0 / 8.0) * jzf[fineisnindex1(i + 3, j, k)];
+            // rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i - 1, j, k)] + (3.0 / 4.0) * rhof[fineisnindex1(i + 1, j, k)] - (1.0 / 8.0) * rhof[fineisnindex1(i + 3, j, k)];
 
-            u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+            // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
             for (a = 0; a < 19; a++)
             {
-                fneqf_t[topbottom(i, k, a)] = (3.0 / 8.0) * fneqf_t[topbottom(i - 1, k, a)] + (3.0 / 4.0) * fneqf_t[topbottom(i + 1, k, a)] - (1.0 / 8.0) * fneqf_t[topbottom(i + 3, k, a)];
+                // fneqf_t[topbottom(i, k, a)] = (3.0 / 8.0) * fneqf_t[topbottom(i - 1, k, a)] + (3.0 / 4.0) * fneqf_t[topbottom(i + 1, k, a)] - (1.0 / 8.0) * fneqf_t[topbottom(i + 3, k, a)];
 
-                t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_t[topbottom(i, k, a)];
+                // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_t[topbottom(i, k, a)];
+
+                ff[fineindex(i, j, k, a)] = (3.0 / 8.0) * ff[fineindex(i - 1, j, k, a)] + (3.0 / 4.0) * ff[fineindex(i + 1, j, k, a)] - (1.0 / 8.0) * ff[fineindex(i + 3, j, k, a)];
             }
 
             i = nx - 1;
             j = face;
 
-            jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i + 1, j, k)] + (3.0 / 4.0) * jxf[fineisnindex1(i - 1, j, k)] - (1.0 / 8.0) * jxf[fineisnindex1(i - 3, j, k)];
-            jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i + 1, j, k)] + (3.0 / 4.0) * jyf[fineisnindex1(i - 1, j, k)] - (1.0 / 8.0) * jyf[fineisnindex1(i - 3, j, k)];
-            jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i + 1, j, k)] + (3.0 / 4.0) * jzf[fineisnindex1(i - 1, j, k)] - (1.0 / 8.0) * jzf[fineisnindex1(i - 3, j, k)];
-            rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i + 1, j, k)] + (3.0 / 4.0) * rhof[fineisnindex1(i - 1, j, k)] - (1.0 / 8.0) * rhof[fineisnindex1(i - 3, j, k)];
+            // jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i + 1, j, k)] + (3.0 / 4.0) * jxf[fineisnindex1(i - 1, j, k)] - (1.0 / 8.0) * jxf[fineisnindex1(i - 3, j, k)];
+            // jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i + 1, j, k)] + (3.0 / 4.0) * jyf[fineisnindex1(i - 1, j, k)] - (1.0 / 8.0) * jyf[fineisnindex1(i - 3, j, k)];
+            // jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i + 1, j, k)] + (3.0 / 4.0) * jzf[fineisnindex1(i - 1, j, k)] - (1.0 / 8.0) * jzf[fineisnindex1(i - 3, j, k)];
+            // rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i + 1, j, k)] + (3.0 / 4.0) * rhof[fineisnindex1(i - 1, j, k)] - (1.0 / 8.0) * rhof[fineisnindex1(i - 3, j, k)];
 
-            u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+            // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
             for (a = 0; a < 19; a++)
             {
-                fneqf_t[topbottom(i, k, a)] = (3.0 / 8.0) * fneqf_t[topbottom(i + 1, k, a)] + (3.0 / 4.0) * fneqf_t[topbottom(i - 1, k, a)] - (1.0 / 8.0) * fneqf_t[topbottom(i - 3, k, a)];
+                // fneqf_t[topbottom(i, k, a)] = (3.0 / 8.0) * fneqf_t[topbottom(i + 1, k, a)] + (3.0 / 4.0) * fneqf_t[topbottom(i - 1, k, a)] - (1.0 / 8.0) * fneqf_t[topbottom(i - 3, k, a)];
 
-                t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_t[topbottom(i, k, a)];
+                // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_t[topbottom(i, k, a)];
+
+                ff[fineindex(i, j, k, a)] = (3.0 / 8.0) * ff[fineindex(i + 1, j, k, a)] + (3.0 / 4.0) * ff[fineindex(i - 1, j, k, a)] - (1.0 / 8.0) * ff[fineindex(i - 3, j, k, a)];
             }
         }
 
@@ -2691,94 +2710,100 @@ void interpolation_fine_boundary(double *ff, double *feqf, double *fneqf_b, doub
             k = 1;
             j = face;
 
-            jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j, k + 3)];
-            jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j, k + 3)];
-            jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j, k + 3)];
-            rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j, k + 3)];
+            // jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j, k + 3)];
+            // jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j, k + 3)];
+            // jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j, k + 3)];
+            // rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j, k + 3)];
 
-            u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+            // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
             for (a = 0; a < 19; a++)
             {
-                fneqf_t[topbottom(i, k, a)] = (3.0 / 8.0) * fneqf_t[topbottom(i, k - 1, a)] + (3.0 / 4.0) * fneqf_t[topbottom(i, k + 1, a)] - (1.0 / 8.0) * fneqf_t[topbottom(i, k + 3, a)];
+                // fneqf_t[topbottom(i, k, a)] = (3.0 / 8.0) * fneqf_t[topbottom(i, k - 1, a)] + (3.0 / 4.0) * fneqf_t[topbottom(i, k + 1, a)] - (1.0 / 8.0) * fneqf_t[topbottom(i, k + 3, a)];
 
-                t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_t[topbottom(i, k, a)];
+                // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_t[topbottom(i, k, a)];
+
+                ff[fineindex(i, j, k, a)] = (3.0 / 8.0) * ff[fineindex(i, j, k - 1, a)] + (3.0 / 4.0) * ff[fineindex(i, j, k + 1, a)] - (1.0 / 8.0) * ff[fineindex(i, j, k + 3, a)];
             }
 
             k = nz - 1;
             j = face;
 
-            jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j, k - 3)];
-            jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j, k - 3)];
-            jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j, k - 3)];
-            rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j, k - 3)];
+            // jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j, k - 3)];
+            // jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j, k - 3)];
+            // jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j, k - 3)];
+            // rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j, k - 3)];
 
-            u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+            // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
             for (a = 0; a < 19; a++)
             {
-                fneqf_t[topbottom(i, k, a)] = (3.0 / 8.0) * fneqf_t[topbottom(i, k + 1, a)] + (3.0 / 4.0) * fneqf_t[topbottom(i, k - 1, a)] - (1.0 / 8.0) * fneqf_t[topbottom(i, k - 3, a)];
+                // fneqf_t[topbottom(i, k, a)] = (3.0 / 8.0) * fneqf_t[topbottom(i, k + 1, a)] + (3.0 / 4.0) * fneqf_t[topbottom(i, k - 1, a)] - (1.0 / 8.0) * fneqf_t[topbottom(i, k - 3, a)];
 
-                t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_t[topbottom(i, k, a)];
+                // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_t[topbottom(i, k, a)];
+
+                ff[fineindex(i, j, k, a)] = (3.0 / 8.0) * ff[fineindex(i, j, k + 1, a)] + (3.0 / 4.0) * ff[fineindex(i, j, k - 1, a)] - (1.0 / 8.0) * ff[fineindex(i, j, k - 3, a)];
             }
         }
     }
     if (side == 4)
     {
-        for (k = 0, i = face; k <= nz; k += alpha)
-        {
-            for (j = 0; j <= ny; j += alpha)
-            {
-                l = 0.0;
-                m = 0.0;
-                n = 0.0;
-                p = 0.0;
+        // for (k = 0, i = face; k <= nz; k += alpha)
+        // {
+        //     for (j = 0; j <= ny; j += alpha)
+        //     {
+        //         l = 0.0;
+        //         m = 0.0;
+        //         n = 0.0;
+        //         p = 0.0;
 
-                for (a = 0; a < 19; a++)
-                {
-                    l += ff[fineindex(i, j, k, a)];
-                    m += ex[a] * ff[fineindex(i, j, k, a)];
-                    n += ey[a] * ff[fineindex(i, j, k, a)];
-                    p += ez[a] * ff[fineindex(i, j, k, a)];
-                }
-                rhof[fineisnindex1(i, j, k)] = l;
-                jxf[fineisnindex1(i, j, k)] = m / rhof[fineisnindex1(i, j, k)];
-                jyf[fineisnindex1(i, j, k)] = n / rhof[fineisnindex1(i, j, k)];
-                jzf[fineisnindex1(i, j, k)] = p / rhof[fineisnindex1(i, j, k)];
+        //         for (a = 0; a < 19; a++)
+        //         {
+        //             l += ff[fineindex(i, j, k, a)];
+        //             m += ex[a] * ff[fineindex(i, j, k, a)];
+        //             n += ey[a] * ff[fineindex(i, j, k, a)];
+        //             p += ez[a] * ff[fineindex(i, j, k, a)];
+        //         }
+        //         rhof[fineisnindex1(i, j, k)] = l;
+        //         jxf[fineisnindex1(i, j, k)] = m / rhof[fineisnindex1(i, j, k)];
+        //         jyf[fineisnindex1(i, j, k)] = n / rhof[fineisnindex1(i, j, k)];
+        //         jzf[fineisnindex1(i, j, k)] = p / rhof[fineisnindex1(i, j, k)];
 
-                u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+        //         u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
-                for (a = 0; a < 19; a++)
-                {
-                    t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                    feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                    fneqf_l[leftright(j, k, a)] = ff[fineindex(i, j, k, a)] - feqf[fineindex(i, j, k, a)];
-                }
-            }
-        }
+        //         for (a = 0; a < 19; a++)
+        //         {
+        //             t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+        //             feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+        //             fneqf_l[leftright(j, k, a)] = ff[fineindex(i, j, k, a)] - feqf[fineindex(i, j, k, a)];
+        //         }
+        //     }
+        // }
 
         for (i = face, k = 0; k <= nz; k += alpha)
         {
             for (j = 3; j <= ny - 3; j += alpha)
             {
-                jxf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jxf[fineisnindex1(i, j + 1, k)] + jxf[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (jxf[fineisnindex1(i, j + 3, k)] + jxf[fineisnindex1(i, j - 3, k)]);
-                jyf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jyf[fineisnindex1(i, j + 1, k)] + jyf[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (jyf[fineisnindex1(i, j + 3, k)] + jyf[fineisnindex1(i, j - 3, k)]);
-                jzf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jzf[fineisnindex1(i, j + 1, k)] + jzf[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (jzf[fineisnindex1(i, j + 3, k)] + jzf[fineisnindex1(i, j - 3, k)]);
-                rhof[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (rhof[fineisnindex1(i, j + 1, k)] + rhof[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (rhof[fineisnindex1(i, j + 3, k)] + rhof[fineisnindex1(i, j - 3, k)]);
+                // jxf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jxf[fineisnindex1(i, j + 1, k)] + jxf[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (jxf[fineisnindex1(i, j + 3, k)] + jxf[fineisnindex1(i, j - 3, k)]);
+                // jyf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jyf[fineisnindex1(i, j + 1, k)] + jyf[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (jyf[fineisnindex1(i, j + 3, k)] + jyf[fineisnindex1(i, j - 3, k)]);
+                // jzf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jzf[fineisnindex1(i, j + 1, k)] + jzf[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (jzf[fineisnindex1(i, j + 3, k)] + jzf[fineisnindex1(i, j - 3, k)]);
+                // rhof[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (rhof[fineisnindex1(i, j + 1, k)] + rhof[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (rhof[fineisnindex1(i, j + 3, k)] + rhof[fineisnindex1(i, j - 3, k)]);
 
-                u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+                // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
                 for (a = 0; a < 19; a++)
                 {
-                    fneqf_l[leftright(j, k, a)] = (9.0 / 16.0) * (fneqf_l[leftright(j + 1, k, a)] + fneqf_l[leftright(j - 1, k, a)]) - (1.0 / 16.0) * (fneqf_l[leftright(j + 3, k, a)] + fneqf_l[leftright(j - 3, k, a)]);
+                    // fneqf_l[leftright(j, k, a)] = (9.0 / 16.0) * (fneqf_l[leftright(j + 1, k, a)] + fneqf_l[leftright(j - 1, k, a)]) - (1.0 / 16.0) * (fneqf_l[leftright(j + 3, k, a)] + fneqf_l[leftright(j - 3, k, a)]);
 
-                    t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                    feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                    ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_l[leftright(j, k, a)];
+                    // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                    // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                    // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_l[leftright(j, k, a)];
+
+                    ff[fineindex(i, j, k, a)] = (9.0 / 16.0) * (ff[fineindex(i, j + 1, k, a)] + ff[fineindex(i, j - 1, k, a)]) - (1.0 / 16.0) * (ff[fineindex(i, j + 3, k, a)] + ff[fineindex(i, j - 3, k, a)]);
                 }
             }
         }
@@ -2787,20 +2812,22 @@ void interpolation_fine_boundary(double *ff, double *feqf, double *fneqf_b, doub
         {
             for (k = 3; k <= nz - 3; k += alpha)
             {
-                jxf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jxf[fineisnindex1(i, j, k + 1)] + jxf[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (jxf[fineisnindex1(i, j, k + 3)] + jxf[fineisnindex1(i, j, k - 3)]);
-                jyf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jyf[fineisnindex1(i, j, k + 1)] + jyf[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (jyf[fineisnindex1(i, j, k + 3)] + jyf[fineisnindex1(i, j, k - 3)]);
-                jzf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jzf[fineisnindex1(i, j, k + 1)] + jzf[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (jzf[fineisnindex1(i, j, k + 3)] + jzf[fineisnindex1(i, j, k - 3)]);
-                rhof[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (rhof[fineisnindex1(i, j, k + 1)] + rhof[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (rhof[fineisnindex1(i, j, k + 3)] + rhof[fineisnindex1(i, j, k - 3)]);
+                // jxf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jxf[fineisnindex1(i, j, k + 1)] + jxf[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (jxf[fineisnindex1(i, j, k + 3)] + jxf[fineisnindex1(i, j, k - 3)]);
+                // jyf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jyf[fineisnindex1(i, j, k + 1)] + jyf[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (jyf[fineisnindex1(i, j, k + 3)] + jyf[fineisnindex1(i, j, k - 3)]);
+                // jzf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jzf[fineisnindex1(i, j, k + 1)] + jzf[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (jzf[fineisnindex1(i, j, k + 3)] + jzf[fineisnindex1(i, j, k - 3)]);
+                // rhof[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (rhof[fineisnindex1(i, j, k + 1)] + rhof[fineisnindex1(i, j, k - 1)]) - (1.0 / 16.0) * (rhof[fineisnindex1(i, j, k + 3)] + rhof[fineisnindex1(i, j, k - 3)]);
 
-                u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+                // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
                 for (a = 0; a < 19; a++)
                 {
-                    fneqf_l[leftright(j, k, a)] = (9.0 / 16.0) * (fneqf_l[leftright(j, k + 1, a)] + fneqf_l[leftright(j, k - 1, a)]) - (1.0 / 16.0) * (fneqf_l[leftright(j, k + 3, a)] + fneqf_l[leftright(j, k - 3, a)]);
+                    // fneqf_l[leftright(j, k, a)] = (9.0 / 16.0) * (fneqf_l[leftright(j, k + 1, a)] + fneqf_l[leftright(j, k - 1, a)]) - (1.0 / 16.0) * (fneqf_l[leftright(j, k + 3, a)] + fneqf_l[leftright(j, k - 3, a)]);
 
-                    t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                    feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                    ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_l[leftright(j, k, a)];
+                    // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                    // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                    // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_l[leftright(j, k, a)];
+
+                    ff[fineindex(i, j, k, a)] = (9.0 / 16.0) * (ff[fineindex(i, j, k + 1, a)] + ff[fineindex(i, j, k - 1, a)]) - (1.0 / 16.0) * (ff[fineindex(i, j, k + 3, a)] + ff[fineindex(i, j, k - 3, a)]);
                 }
             }
         }
@@ -2810,39 +2837,43 @@ void interpolation_fine_boundary(double *ff, double *feqf, double *fneqf_b, doub
             i = face;
             j = 1;
 
-            jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j + 3, k)];
-            jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j + 3, k)];
-            jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j + 3, k)];
-            rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j + 3, k)];
+            // jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j + 3, k)];
+            // jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j + 3, k)];
+            // jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j + 3, k)];
+            // rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j + 3, k)];
 
-            u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+            // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
             for (a = 0; a < 19; a++)
             {
-                fneqf_l[leftright(j, k, a)] = (3.0 / 8.0) * fneqf_l[leftright(j - 1, k, a)] + (3.0 / 4.0) * fneqf_l[leftright(j + 1, k, a)] - (1.0 / 8.0) * fneqf_l[leftright(j + 3, k, a)];
+                // fneqf_l[leftright(j, k, a)] = (3.0 / 8.0) * fneqf_l[leftright(j - 1, k, a)] + (3.0 / 4.0) * fneqf_l[leftright(j + 1, k, a)] - (1.0 / 8.0) * fneqf_l[leftright(j + 3, k, a)];
 
-                t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_l[leftright(j, k, a)];
+                // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_l[leftright(j, k, a)];
+
+                ff[fineindex(i, j, k, a)] = (3.0 / 8.0) * ff[fineindex(i, j - 1, k, a)] + (3.0 / 4.0) * ff[fineindex(i, j + 1, k, a)] - (1.0 / 8.0) * ff[fineindex(i, j + 3, k, a)];
             }
 
             i = face;
             j = ny - 1;
 
-            jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j - 3, k)];
-            jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j - 3, k)];
-            jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j - 3, k)];
-            rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j - 3, k)];
+            // jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j - 3, k)];
+            // jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j - 3, k)];
+            // jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j - 3, k)];
+            // rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j - 3, k)];
 
-            u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+            // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
             for (a = 0; a < 19; a++)
             {
-                fneqf_l[leftright(j, k, a)] = (3.0 / 8.0) * fneqf_l[leftright(j + 1, k, a)] + (3.0 / 4.0) * fneqf_l[leftright(j - 1, k, a)] - (1.0 / 8.0) * fneqf_l[leftright(j - 3, k, a)];
+                // fneqf_l[leftright(j, k, a)] = (3.0 / 8.0) * fneqf_l[leftright(j + 1, k, a)] + (3.0 / 4.0) * fneqf_l[leftright(j - 1, k, a)] - (1.0 / 8.0) * fneqf_l[leftright(j - 3, k, a)];
 
-                t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_l[leftright(j, k, a)];
+                // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_l[leftright(j, k, a)];
+
+                ff[fineindex(i, j, k, a)] = (3.0 / 8.0) * ff[fineindex(i, j + 1, k, a)] + (3.0 / 4.0) * ff[fineindex(i, j - 1, k, a)] - (1.0 / 8.0) * ff[fineindex(i, j - 3, k, a)];
             }
         }
 
@@ -2851,94 +2882,100 @@ void interpolation_fine_boundary(double *ff, double *feqf, double *fneqf_b, doub
             i = face;
             k = 1;
 
-            jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j, k + 3)];
-            jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j, k + 3)];
-            jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j, k + 3)];
-            rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j, k + 3)];
+            // jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j, k + 3)];
+            // jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j, k + 3)];
+            // jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j, k + 3)];
+            // rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j, k - 1)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j, k + 1)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j, k + 3)];
 
-            u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+            // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
             for (a = 0; a < 19; a++)
             {
-                fneqf_l[leftright(j, k, a)] = (3.0 / 8.0) * fneqf_l[leftright(j, k - 1, a)] + (3.0 / 4.0) * fneqf_l[leftright(j, k + 1, a)] - (1.0 / 8.0) * fneqf_l[leftright(j, k + 3, a)];
+                // fneqf_l[leftright(j, k, a)] = (3.0 / 8.0) * fneqf_l[leftright(j, k - 1, a)] + (3.0 / 4.0) * fneqf_l[leftright(j, k + 1, a)] - (1.0 / 8.0) * fneqf_l[leftright(j, k + 3, a)];
 
-                t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_l[leftright(j, k, a)];
+                // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_l[leftright(j, k, a)];
+
+                ff[fineindex(i, j, k, a)] = (3.0 / 8.0) * ff[fineindex(i, j, k - 1, a)] + (3.0 / 4.0) * ff[fineindex(i, j, k + 1, a)] - (1.0 / 8.0) * ff[fineindex(i, j, k + 3, a)];
             }
 
             i = face;
             k = nz - 1;
 
-            jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j, k - 3)];
-            jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j, k - 3)];
-            jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j, k - 3)];
-            rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j, k - 3)];
+            // jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j, k - 3)];
+            // jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j, k - 3)];
+            // jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j, k - 3)];
+            // rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j, k + 1)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j, k - 1)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j, k - 3)];
 
-            u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+            // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
             for (a = 0; a < 19; a++)
             {
-                fneqf_l[leftright(j, k, a)] = (3.0 / 8.0) * fneqf_l[leftright(j, k + 1, a)] + (3.0 / 4.0) * fneqf_l[leftright(j, k - 1, a)] - (1.0 / 8.0) * fneqf_l[leftright(j, k - 3, a)];
+                // fneqf_l[leftright(j, k, a)] = (3.0 / 8.0) * fneqf_l[leftright(j, k + 1, a)] + (3.0 / 4.0) * fneqf_l[leftright(j, k - 1, a)] - (1.0 / 8.0) * fneqf_l[leftright(j, k - 3, a)];
 
-                t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_l[leftright(j, k, a)];
+                // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_l[leftright(j, k, a)];
+
+                ff[fineindex(i, j, k, a)] = (3.0 / 8.0) * ff[fineindex(i, j, k + 1, a)] + (3.0 / 4.0) * ff[fineindex(i, j, k - 1, a)] - (1.0 / 8.0) * ff[fineindex(i, j, k - 3, a)];
             }
         }
     }
     if (side == 5)
     {
-        for (i = 0, k = face; i <= nx; i += alpha)
-        {
-            for (j = 0; j <= ny; j += alpha)
-            {
-                l = 0.0;
-                m = 0.0;
-                n = 0.0;
-                p = 0.0;
+        // for (i = 0, k = face; i <= nx; i += alpha)
+        // {
+        //     for (j = 0; j <= ny; j += alpha)
+        //     {
+        //         l = 0.0;
+        //         m = 0.0;
+        //         n = 0.0;
+        //         p = 0.0;
 
-                for (a = 0; a < 19; a++)
-                {
-                    l += ff[fineindex(i, j, k, a)];
-                    m += ex[a] * ff[fineindex(i, j, k, a)];
-                    n += ey[a] * ff[fineindex(i, j, k, a)];
-                    p += ez[a] * ff[fineindex(i, j, k, a)];
-                }
-                rhof[fineisnindex1(i, j, k)] = l;
-                jxf[fineisnindex1(i, j, k)] = m / rhof[fineisnindex1(i, j, k)];
-                jyf[fineisnindex1(i, j, k)] = n / rhof[fineisnindex1(i, j, k)];
-                jzf[fineisnindex1(i, j, k)] = p / rhof[fineisnindex1(i, j, k)];
+        //         for (a = 0; a < 19; a++)
+        //         {
+        //             l += ff[fineindex(i, j, k, a)];
+        //             m += ex[a] * ff[fineindex(i, j, k, a)];
+        //             n += ey[a] * ff[fineindex(i, j, k, a)];
+        //             p += ez[a] * ff[fineindex(i, j, k, a)];
+        //         }
+        //         rhof[fineisnindex1(i, j, k)] = l;
+        //         jxf[fineisnindex1(i, j, k)] = m / rhof[fineisnindex1(i, j, k)];
+        //         jyf[fineisnindex1(i, j, k)] = n / rhof[fineisnindex1(i, j, k)];
+        //         jzf[fineisnindex1(i, j, k)] = p / rhof[fineisnindex1(i, j, k)];
 
-                u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+        //         u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
-                for (a = 0; a < 19; a++)
-                {
-                    t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                    feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                    fneqf_d[updown(i, j, a)] = ff[fineindex(i, j, k, a)] - feqf[fineindex(i, j, k, a)];
-                }
-            }
-        }
+        //         for (a = 0; a < 19; a++)
+        //         {
+        //             t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+        //             feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+        //             fneqf_d[updown(i, j, a)] = ff[fineindex(i, j, k, a)] - feqf[fineindex(i, j, k, a)];
+        //         }
+        //     }
+        // }
 
         for (k = face, j = 0; j <= ny; j += alpha)
         {
             for (i = 3; i <= nx - 3; i += alpha)
             {
-                jxf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jxf[fineisnindex1(i + 1, j, k)] + jxf[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (jxf[fineisnindex1(i + 3, j, k)] + jxf[fineisnindex1(i - 3, j, k)]);
-                jyf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jyf[fineisnindex1(i + 1, j, k)] + jyf[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (jyf[fineisnindex1(i + 3, j, k)] + jyf[fineisnindex1(i - 3, j, k)]);
-                jzf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jzf[fineisnindex1(i + 1, j, k)] + jzf[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (jzf[fineisnindex1(i + 3, j, k)] + jzf[fineisnindex1(i - 3, j, k)]);
-                rhof[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (rhof[fineisnindex1(i + 1, j, k)] + rhof[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (rhof[fineisnindex1(i + 3, j, k)] + rhof[fineisnindex1(i - 3, j, k)]);
+                // jxf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jxf[fineisnindex1(i + 1, j, k)] + jxf[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (jxf[fineisnindex1(i + 3, j, k)] + jxf[fineisnindex1(i - 3, j, k)]);
+                // jyf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jyf[fineisnindex1(i + 1, j, k)] + jyf[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (jyf[fineisnindex1(i + 3, j, k)] + jyf[fineisnindex1(i - 3, j, k)]);
+                // jzf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jzf[fineisnindex1(i + 1, j, k)] + jzf[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (jzf[fineisnindex1(i + 3, j, k)] + jzf[fineisnindex1(i - 3, j, k)]);
+                // rhof[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (rhof[fineisnindex1(i + 1, j, k)] + rhof[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (rhof[fineisnindex1(i + 3, j, k)] + rhof[fineisnindex1(i - 3, j, k)]);
 
-                u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+                // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
                 for (a = 0; a < 19; a++)
                 {
-                    fneqf_d[updown(i, j, a)] = (9.0 / 16.0) * (fneqf_d[updown(i + 1, j, a)] + fneqf_d[updown(i - 1, j, a)]) - (1.0 / 16.0) * (fneqf_d[updown(i + 3, j, a)] + fneqf_d[updown(i - 3, j, a)]);
+                    // fneqf_d[updown(i, j, a)] = (9.0 / 16.0) * (fneqf_d[updown(i + 1, j, a)] + fneqf_d[updown(i - 1, j, a)]) - (1.0 / 16.0) * (fneqf_d[updown(i + 3, j, a)] + fneqf_d[updown(i - 3, j, a)]);
 
-                    t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                    feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                    ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_d[updown(i, j, a)];
+                    // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                    // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                    // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_d[updown(i, j, a)];
+
+                    ff[fineindex(i, j, k, a)] = (9.0 / 16.0) * (ff[fineindex(i + 1, j, k, a)] + ff[fineindex(i - 1, j, k, a)]) - (1.0 / 16.0) * (ff[fineindex(i + 3, j, k, a)] + ff[fineindex(i - 3, j, k, a)]);
                 }
             }
         }
