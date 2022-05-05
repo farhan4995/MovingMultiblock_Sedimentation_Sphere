@@ -1,3 +1,4 @@
-Sedimentation of a sphere
 In this code, all the interpolation will be done using direct interpolation of the distribution function using 
-p-point lagrangian interpolation of the inside fine-grid layer values. 
+p-point lagrangian interpolation of the inside fine-grid layer values.
+
+The intermediate boundary is also interpolated using 4-point lagrangian interpolation using 1 distribution from coarse node and 3 fine node

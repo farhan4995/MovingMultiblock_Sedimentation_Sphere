@@ -3133,20 +3133,22 @@ void interpolation_fine_boundary(double *ff, double *feqf, double *fneqf_b, doub
         {
             for (i = 3; i <= nx - 3; i += alpha)
             {
-                jxf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jxf[fineisnindex1(i + 1, j, k)] + jxf[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (jxf[fineisnindex1(i + 3, j, k)] + jxf[fineisnindex1(i - 3, j, k)]);
-                jyf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jyf[fineisnindex1(i + 1, j, k)] + jyf[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (jyf[fineisnindex1(i + 3, j, k)] + jyf[fineisnindex1(i - 3, j, k)]);
-                jzf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jzf[fineisnindex1(i + 1, j, k)] + jzf[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (jzf[fineisnindex1(i + 3, j, k)] + jzf[fineisnindex1(i - 3, j, k)]);
-                rhof[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (rhof[fineisnindex1(i + 1, j, k)] + rhof[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (rhof[fineisnindex1(i + 3, j, k)] + rhof[fineisnindex1(i - 3, j, k)]);
+                // jxf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jxf[fineisnindex1(i + 1, j, k)] + jxf[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (jxf[fineisnindex1(i + 3, j, k)] + jxf[fineisnindex1(i - 3, j, k)]);
+                // jyf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jyf[fineisnindex1(i + 1, j, k)] + jyf[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (jyf[fineisnindex1(i + 3, j, k)] + jyf[fineisnindex1(i - 3, j, k)]);
+                // jzf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jzf[fineisnindex1(i + 1, j, k)] + jzf[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (jzf[fineisnindex1(i + 3, j, k)] + jzf[fineisnindex1(i - 3, j, k)]);
+                // rhof[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (rhof[fineisnindex1(i + 1, j, k)] + rhof[fineisnindex1(i - 1, j, k)]) - (1.0 / 16.0) * (rhof[fineisnindex1(i + 3, j, k)] + rhof[fineisnindex1(i - 3, j, k)]);
 
-                u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+                // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
                 for (a = 0; a < 19; a++)
                 {
-                    fneqf_u[updown(i, j, a)] = (9.0 / 16.0) * (fneqf_u[updown(i + 1, j, a)] + fneqf_u[updown(i - 1, j, a)]) - (1.0 / 16.0) * (fneqf_u[updown(i + 3, j, a)] + fneqf_u[updown(i - 3, j, a)]);
+                    // fneqf_u[updown(i, j, a)] = (9.0 / 16.0) * (fneqf_u[updown(i + 1, j, a)] + fneqf_u[updown(i - 1, j, a)]) - (1.0 / 16.0) * (fneqf_u[updown(i + 3, j, a)] + fneqf_u[updown(i - 3, j, a)]);
 
-                    t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                    feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                    ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_u[updown(i, j, a)];
+                    // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                    // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                    // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_u[updown(i, j, a)];
+
+                    ff[fineindex(i, j, k, a)] = (9.0 / 16.0) * (ff[fineindex(i + 1, j, k, a)] + ff[fineindex(i - 1, j, k, a)]) - (1.0 / 16.0) * (ff[fineindex(i + 3, j, k, a)] + ff[fineindex(i - 3, j, k, a)]);
                 }
             }
         }
@@ -3155,20 +3157,22 @@ void interpolation_fine_boundary(double *ff, double *feqf, double *fneqf_b, doub
         {
             for (j = 3; j <= ny - 3; j += alpha)
             {
-                jxf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jxf[fineisnindex1(i, j + 1, k)] + jxf[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (jxf[fineisnindex1(i, j + 3, k)] + jxf[fineisnindex1(i, j - 3, k)]);
-                jyf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jyf[fineisnindex1(i, j + 1, k)] + jyf[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (jyf[fineisnindex1(i, j + 3, k)] + jyf[fineisnindex1(i, j - 3, k)]);
-                jzf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jzf[fineisnindex1(i, j + 1, k)] + jzf[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (jzf[fineisnindex1(i, j + 3, k)] + jzf[fineisnindex1(i, j - 3, k)]);
-                rhof[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (rhof[fineisnindex1(i, j + 1, k)] + rhof[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (rhof[fineisnindex1(i, j + 3, k)] + rhof[fineisnindex1(i, j - 3, k)]);
+                // jxf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jxf[fineisnindex1(i, j + 1, k)] + jxf[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (jxf[fineisnindex1(i, j + 3, k)] + jxf[fineisnindex1(i, j - 3, k)]);
+                // jyf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jyf[fineisnindex1(i, j + 1, k)] + jyf[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (jyf[fineisnindex1(i, j + 3, k)] + jyf[fineisnindex1(i, j - 3, k)]);
+                // jzf[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (jzf[fineisnindex1(i, j + 1, k)] + jzf[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (jzf[fineisnindex1(i, j + 3, k)] + jzf[fineisnindex1(i, j - 3, k)]);
+                // rhof[fineisnindex1(i, j, k)] = (9.0 / 16.0) * (rhof[fineisnindex1(i, j + 1, k)] + rhof[fineisnindex1(i, j - 1, k)]) - (1.0 / 16.0) * (rhof[fineisnindex1(i, j + 3, k)] + rhof[fineisnindex1(i, j - 3, k)]);
 
-                u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+                // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
                 for (a = 0; a < 19; a++)
                 {
-                    fneqf_u[updown(i, j, a)] = (9.0 / 16.0) * (fneqf_u[updown(i, j + 1, a)] + fneqf_u[updown(i, j - 1, a)]) - (1.0 / 16.0) * (fneqf_u[updown(i, j + 3, a)] + fneqf_u[updown(i, j - 3, a)]);
+                    // fneqf_u[updown(i, j, a)] = (9.0 / 16.0) * (fneqf_u[updown(i, j + 1, a)] + fneqf_u[updown(i, j - 1, a)]) - (1.0 / 16.0) * (fneqf_u[updown(i, j + 3, a)] + fneqf_u[updown(i, j - 3, a)]);
 
-                    t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                    feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                    ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_u[updown(i, j, a)];
+                    // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                    // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                    // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_u[updown(i, j, a)];
+
+                    ff[fineindex(i, j, k, a)] = (9.0 / 16.0) * (ff[fineindex(i, j + 1, k, a)] + ff[fineindex(i, j - 1, k, a)]) - (1.0 / 16.0) * (ff[fineindex(i, j + 3, k, a)] + ff[fineindex(i, j - 3, k, a)]);
                 }
             }
         }
@@ -3178,39 +3182,43 @@ void interpolation_fine_boundary(double *ff, double *feqf, double *fneqf_b, doub
             k = face;
             j = 1;
 
-            jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j + 3, k)];
-            jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j + 3, k)];
-            jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j + 3, k)];
-            rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j + 3, k)];
+            // jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j + 3, k)];
+            // jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j + 3, k)];
+            // jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j + 3, k)];
+            // rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j - 1, k)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j + 1, k)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j + 3, k)];
 
-            u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+            // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
             for (a = 0; a < 19; a++)
             {
-                fneqf_u[updown(i, j, a)] = (3.0 / 8.0) * fneqf_u[updown(i, j - 1, a)] + (3.0 / 4.0) * fneqf_u[updown(i, j + 1, a)] - (1.0 / 8.0) * fneqf_u[updown(i, j + 3, a)];
+                // fneqf_u[updown(i, j, a)] = (3.0 / 8.0) * fneqf_u[updown(i, j - 1, a)] + (3.0 / 4.0) * fneqf_u[updown(i, j + 1, a)] - (1.0 / 8.0) * fneqf_u[updown(i, j + 3, a)];
 
-                t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_u[updown(i, j, a)];
+                // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_u[updown(i, j, a)];
+
+                ff[fineindex(i, j, k, a)] = (3.0 / 8.0) * ff[fineindex(i, j - 1, k, a)] + (3.0 / 4.0) * ff[fineindex(i, j + 1, k, a)] - (1.0 / 8.0) * ff[fineindex(i, j + 3, k, a)];
             }
 
             k = face;
             j = ny - 1;
 
-            jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j - 3, k)];
-            jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j - 3, k)];
-            jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j - 3, k)];
-            rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j - 3, k)];
+            // jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * jxf[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * jxf[fineisnindex1(i, j - 3, k)];
+            // jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * jyf[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * jyf[fineisnindex1(i, j - 3, k)];
+            // jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * jzf[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * jzf[fineisnindex1(i, j - 3, k)];
+            // rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i, j + 1, k)] + (3.0 / 4.0) * rhof[fineisnindex1(i, j - 1, k)] - (1.0 / 8.0) * rhof[fineisnindex1(i, j - 3, k)];
 
-            u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+            // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
             for (a = 0; a < 19; a++)
             {
-                fneqf_u[updown(i, j, a)] = (3.0 / 8.0) * fneqf_u[updown(i, j + 1, a)] + (3.0 / 4.0) * fneqf_u[updown(i, j - 1, a)] - (1.0 / 8.0) * fneqf_u[updown(i, j - 3, a)];
+                // fneqf_u[updown(i, j, a)] = (3.0 / 8.0) * fneqf_u[updown(i, j + 1, a)] + (3.0 / 4.0) * fneqf_u[updown(i, j - 1, a)] - (1.0 / 8.0) * fneqf_u[updown(i, j - 3, a)];
 
-                t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_u[updown(i, j, a)];
+                // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_u[updown(i, j, a)];
+
+                ff[fineindex(i, j, k, a)] = (3.0 / 8.0) * ff[fineindex(i, j + 1, k, a)] + (3.0 / 4.0) * ff[fineindex(i, j - 1, k, a)] - (1.0 / 8.0) * ff[fineindex(i, j - 3, k, a)];
             }
         }
 
@@ -3219,39 +3227,43 @@ void interpolation_fine_boundary(double *ff, double *feqf, double *fneqf_b, doub
             k = face;
             i = 1;
 
-            jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i - 1, j, k)] + (3.0 / 4.0) * jxf[fineisnindex1(i + 1, j, k)] - (1.0 / 8.0) * jxf[fineisnindex1(i + 3, j, k)];
-            jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i - 1, j, k)] + (3.0 / 4.0) * jyf[fineisnindex1(i + 1, j, k)] - (1.0 / 8.0) * jyf[fineisnindex1(i + 3, j, k)];
-            jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i - 1, j, k)] + (3.0 / 4.0) * jzf[fineisnindex1(i + 1, j, k)] - (1.0 / 8.0) * jzf[fineisnindex1(i + 3, j, k)];
-            rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i - 1, j, k)] + (3.0 / 4.0) * rhof[fineisnindex1(i + 1, j, k)] - (1.0 / 8.0) * rhof[fineisnindex1(i + 3, j, k)];
+            // jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i - 1, j, k)] + (3.0 / 4.0) * jxf[fineisnindex1(i + 1, j, k)] - (1.0 / 8.0) * jxf[fineisnindex1(i + 3, j, k)];
+            // jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i - 1, j, k)] + (3.0 / 4.0) * jyf[fineisnindex1(i + 1, j, k)] - (1.0 / 8.0) * jyf[fineisnindex1(i + 3, j, k)];
+            // jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i - 1, j, k)] + (3.0 / 4.0) * jzf[fineisnindex1(i + 1, j, k)] - (1.0 / 8.0) * jzf[fineisnindex1(i + 3, j, k)];
+            // rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i - 1, j, k)] + (3.0 / 4.0) * rhof[fineisnindex1(i + 1, j, k)] - (1.0 / 8.0) * rhof[fineisnindex1(i + 3, j, k)];
 
-            u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+            // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
             for (a = 0; a < 19; a++)
             {
-                fneqf_u[updown(i, j, a)] = (3.0 / 8.0) * fneqf_u[updown(i - 1, j, a)] + (3.0 / 4.0) * fneqf_u[updown(i + 1, j, a)] - (1.0 / 8.0) * fneqf_u[updown(i + 3, j, a)];
+                // fneqf_u[updown(i, j, a)] = (3.0 / 8.0) * fneqf_u[updown(i - 1, j, a)] + (3.0 / 4.0) * fneqf_u[updown(i + 1, j, a)] - (1.0 / 8.0) * fneqf_u[updown(i + 3, j, a)];
 
-                t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_u[updown(i, j, a)];
+                // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_u[updown(i, j, a)];
+
+                ff[fineindex(i, j, k, a)] = (3.0 / 8.0) * ff[fineindex(i - 1, j, k, a)] + (3.0 / 4.0) * ff[fineindex(i + 1, j, k, a)] - (1.0 / 8.0) * ff[fineindex(i + 3, j, k, a)];
             }
 
             k = face;
             i = nx - 1;
 
-            jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i + 1, j, k)] + (3.0 / 4.0) * jxf[fineisnindex1(i - 1, j, k)] - (1.0 / 8.0) * jxf[fineisnindex1(i - 3, j, k)];
-            jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i + 1, j, k)] + (3.0 / 4.0) * jyf[fineisnindex1(i - 1, j, k)] - (1.0 / 8.0) * jyf[fineisnindex1(i - 3, j, k)];
-            jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i + 1, j, k)] + (3.0 / 4.0) * jzf[fineisnindex1(i - 1, j, k)] - (1.0 / 8.0) * jzf[fineisnindex1(i - 3, j, k)];
-            rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i + 1, j, k)] + (3.0 / 4.0) * rhof[fineisnindex1(i - 1, j, k)] - (1.0 / 8.0) * rhof[fineisnindex1(i - 3, j, k)];
+            // jxf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jxf[fineisnindex1(i + 1, j, k)] + (3.0 / 4.0) * jxf[fineisnindex1(i - 1, j, k)] - (1.0 / 8.0) * jxf[fineisnindex1(i - 3, j, k)];
+            // jyf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jyf[fineisnindex1(i + 1, j, k)] + (3.0 / 4.0) * jyf[fineisnindex1(i - 1, j, k)] - (1.0 / 8.0) * jyf[fineisnindex1(i - 3, j, k)];
+            // jzf[fineisnindex1(i, j, k)] = (3.0 / 8.0) * jzf[fineisnindex1(i + 1, j, k)] + (3.0 / 4.0) * jzf[fineisnindex1(i - 1, j, k)] - (1.0 / 8.0) * jzf[fineisnindex1(i - 3, j, k)];
+            // rhof[fineisnindex1(i, j, k)] = (3.0 / 8.0) * rhof[fineisnindex1(i + 1, j, k)] + (3.0 / 4.0) * rhof[fineisnindex1(i - 1, j, k)] - (1.0 / 8.0) * rhof[fineisnindex1(i - 3, j, k)];
 
-            u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+            // u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
             for (a = 0; a < 19; a++)
             {
-                fneqf_u[updown(i, j, a)] = (3.0 / 8.0) * fneqf_u[updown(i + 1, j, a)] + (3.0 / 4.0) * fneqf_u[updown(i - 1, j, a)] - (1.0 / 8.0) * fneqf_u[updown(i - 3, j, a)];
+                // fneqf_u[updown(i, j, a)] = (3.0 / 8.0) * fneqf_u[updown(i + 1, j, a)] + (3.0 / 4.0) * fneqf_u[updown(i - 1, j, a)] - (1.0 / 8.0) * fneqf_u[updown(i - 3, j, a)];
 
-                t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_u[updown(i, j, a)];
+                // t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                // feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf_u[updown(i, j, a)];
+
+                ff[fineindex(i, j, k, a)] = (3.0 / 8.0) * ff[fineindex(i + 1, j, k, a)] + (3.0 / 4.0) * ff[fineindex(i - 1, j, k, a)] - (1.0 / 8.0) * ff[fineindex(i - 3, j, k, a)];
             }
         }
     }
@@ -3294,82 +3306,84 @@ void transfer_mid_boundary(double *fc, double *ff, int Start1, int End1, int Sta
                     t = ex[a] * jxc[coarseisnindex1(I, J, K)] + ey[a] * jyc[coarseisnindex1(I, J, K)] + ez[a] * jzc[coarseisnindex1(I, J, K)];
                     feqc[coarseindex(I, J, K, a)] = w[a] * rhoc[coarseisnindex1(I, J, K)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
                     dist_l[a] = feqc[coarseindex(I, J, K, a)] + (tauf / tauc) * (fc[coarseindex(I, J, K, a)] - feqc[coarseindex(I, J, K, a)]) / alpha;
-                    dist_neq_l[0][a] = (tauf / tauc) * (fc[coarseindex(I, J, K, a)] - feqc[coarseindex(I, J, K, a)]) / alpha;
+                    // dist_neq_l[0][a] = (tauf / tauc) * (fc[coarseindex(I, J, K, a)] - feqc[coarseindex(I, J, K, a)]) / alpha;
                 }
 
-                l = 0.0;
-                m = 0.0;
-                n = 0.0;
-                p = 0.0;
+                // l = 0.0;
+                // m = 0.0;
+                // n = 0.0;
+                // p = 0.0;
 
-                for (a = 0; a < 19; a++)
-                {
-                    l += dist_l[a];
-                    m += ex[a] * dist_l[a];
-                    n += ey[a] * dist_l[a];
-                    p += ez[a] * dist_l[a];
-                }
-                rho_l = l;
-                jx_l = m / rho_l;
-                jy_l = n / rho_l;
-                jz_l = p / rho_l;
+                // for (a = 0; a < 19; a++)
+                // {
+                //     l += dist_l[a];
+                //     m += ex[a] * dist_l[a];
+                //     n += ey[a] * dist_l[a];
+                //     p += ez[a] * dist_l[a];
+                // }
+                // rho_l = l;
+                // jx_l = m / rho_l;
+                // jy_l = n / rho_l;
+                // jz_l = p / rho_l;
 
-                //******Find the non equilibrium points for j=0,j=2,j=4
-                for (q = 1, j = 0; j <= 4; j += 2, q++)
-                {
-                    l = 0.0;
-                    m = 0.0;
-                    n = 0.0;
-                    p = 0.0;
+                // //******Find the non equilibrium points for j=0,j=2,j=4
+                // for (q = 1, j = 0; j <= 4; j += 2, q++)
+                // {
+                //     l = 0.0;
+                //     m = 0.0;
+                //     n = 0.0;
+                //     p = 0.0;
 
-                    for (a = 0; a < 19; a++)
-                    {
-                        l += ff[fineindex(i, j, k, a)];
-                        m += ex[a] * ff[fineindex(i, j, k, a)];
-                        n += ey[a] * ff[fineindex(i, j, k, a)];
-                        p += ez[a] * ff[fineindex(i, j, k, a)];
-                    }
-                    rhof[fineisnindex1(i, j, k)] = l;
-                    jxf[fineisnindex1(i, j, k)] = m / rhof[fineisnindex1(i, j, k)];
-                    jyf[fineisnindex1(i, j, k)] = n / rhof[fineisnindex1(i, j, k)];
-                    jzf[fineisnindex1(i, j, k)] = p / rhof[fineisnindex1(i, j, k)];
+                //     for (a = 0; a < 19; a++)
+                //     {
+                //         l += ff[fineindex(i, j, k, a)];
+                //         m += ex[a] * ff[fineindex(i, j, k, a)];
+                //         n += ey[a] * ff[fineindex(i, j, k, a)];
+                //         p += ez[a] * ff[fineindex(i, j, k, a)];
+                //     }
+                //     rhof[fineisnindex1(i, j, k)] = l;
+                //     jxf[fineisnindex1(i, j, k)] = m / rhof[fineisnindex1(i, j, k)];
+                //     jyf[fineisnindex1(i, j, k)] = n / rhof[fineisnindex1(i, j, k)];
+                //     jzf[fineisnindex1(i, j, k)] = p / rhof[fineisnindex1(i, j, k)];
 
-                    u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+                //     u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
-                    for (a = 0; a < 19; a++)
-                    {
-                        t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                        feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                        dist_neq_l[q][a] = ff[fineindex(i, j, k, a)] - feqf[fineindex(i, j, k, a)]; // Non equilibrium distribution for j=-2 point
-                    }
-                }
+                //     for (a = 0; a < 19; a++)
+                //     {
+                //         t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                //         feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                //         dist_neq_l[q][a] = ff[fineindex(i, j, k, a)] - feqf[fineindex(i, j, k, a)]; // Non equilibrium distribution for j=-2 point
+                //     }
+                // }
 
-                //*****4 point langrangian interpolation of the conserved quantities ****
+                // //*****4 point langrangian interpolation of the conserved quantities ****
 
-                jxf[fineisnindex1(i, 1, k)] = (-jx_l + 9.0 * jxf[fineisnindex1(i, 0, k)] + 9.0 * jxf[fineisnindex1(i, 2, k)] - jxf[fineisnindex1(i, 4, k)]) / 16.0;
-                jyf[fineisnindex1(i, 1, k)] = (-jy_l + 9.0 * jyf[fineisnindex1(i, 0, k)] + 9.0 * jyf[fineisnindex1(i, 2, k)] - jyf[fineisnindex1(i, 4, k)]) / 16.0;
-                jzf[fineisnindex1(i, 1, k)] = (-jz_l + 9.0 * jzf[fineisnindex1(i, 0, k)] + 9.0 * jzf[fineisnindex1(i, 2, k)] - jzf[fineisnindex1(i, 4, k)]) / 16.0;
-                rhof[fineisnindex1(i, 1, k)] = (-rho_l + 9.0 * rhof[fineisnindex1(i, 0, k)] + 9.0 * rhof[fineisnindex1(i, 2, k)] - rhof[fineisnindex1(i, 4, k)]) / 16.0;
+                // jxf[fineisnindex1(i, 1, k)] = (-jx_l + 9.0 * jxf[fineisnindex1(i, 0, k)] + 9.0 * jxf[fineisnindex1(i, 2, k)] - jxf[fineisnindex1(i, 4, k)]) / 16.0;
+                // jyf[fineisnindex1(i, 1, k)] = (-jy_l + 9.0 * jyf[fineisnindex1(i, 0, k)] + 9.0 * jyf[fineisnindex1(i, 2, k)] - jyf[fineisnindex1(i, 4, k)]) / 16.0;
+                // jzf[fineisnindex1(i, 1, k)] = (-jz_l + 9.0 * jzf[fineisnindex1(i, 0, k)] + 9.0 * jzf[fineisnindex1(i, 2, k)] - jzf[fineisnindex1(i, 4, k)]) / 16.0;
+                // rhof[fineisnindex1(i, 1, k)] = (-rho_l + 9.0 * rhof[fineisnindex1(i, 0, k)] + 9.0 * rhof[fineisnindex1(i, 2, k)] - rhof[fineisnindex1(i, 4, k)]) / 16.0;
 
-                u2 = jxf[fineisnindex1(i, 1, k)] * jxf[fineisnindex1(i, 1, k)] + jyf[fineisnindex1(i, 1, k)] * jyf[fineisnindex1(i, 1, k)] + jzf[fineisnindex1(i, 1, k)] * jzf[fineisnindex1(i, 1, k)];
+                // u2 = jxf[fineisnindex1(i, 1, k)] * jxf[fineisnindex1(i, 1, k)] + jyf[fineisnindex1(i, 1, k)] * jyf[fineisnindex1(i, 1, k)] + jzf[fineisnindex1(i, 1, k)] * jzf[fineisnindex1(i, 1, k)];
 
-                //*****Equilibrium distribution at j=1 ********
-                for (a = 0; a < 19; a++)
-                {
-                    t = ex[a] * jxf[fineisnindex1(i, 1, k)] + ey[a] * jyf[fineisnindex1(i, 1, k)] + ez[a] * jzf[fineisnindex1(i, 1, k)];
-                    feqf[fineindex(i, 1, k, a)] = w[a] * rhof[fineisnindex1(i, 1, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                }
+                // //*****Equilibrium distribution at j=1 ********
+                // for (a = 0; a < 19; a++)
+                // {
+                //     t = ex[a] * jxf[fineisnindex1(i, 1, k)] + ey[a] * jyf[fineisnindex1(i, 1, k)] + ez[a] * jzf[fineisnindex1(i, 1, k)];
+                //     feqf[fineindex(i, 1, k, a)] = w[a] * rhof[fineisnindex1(i, 1, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // }
 
-                //*****Find Non-equilibrium distribution at j=1 using 4 point langrangian interpolation*******
-                for (a = 0; a < 19; a++)
-                {
-                    fneqf[a] = (-dist_neq_l[0][a] + 9.0 * dist_neq_l[1][a] + 9.0 * dist_neq_l[2][a] - dist_neq_l[3][a]) / 16.0;
-                }
+                // //*****Find Non-equilibrium distribution at j=1 using 4 point langrangian interpolation*******
+                // for (a = 0; a < 19; a++)
+                // {
+                //     fneqf[a] = (-dist_neq_l[0][a] + 9.0 * dist_neq_l[1][a] + 9.0 * dist_neq_l[2][a] - dist_neq_l[3][a]) / 16.0;
+                // }
 
                 //*****Find f = feq+fneq******
                 for (j = 1, a = 0; a < 19; a++)
                 {
-                    ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf[a];
+                    // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf[a];
+
+                    ff[fineindex(i, j, k, a)] = (-dist_l[a] + 9.0 * ff[fineindex(i, 0, k, a)] + 9.0 * ff[fineindex(i, 2, k, a)] - ff[fineindex(i, 4, k, a)]) / 16.0;
                 }
             }
         }
@@ -3404,82 +3418,84 @@ void transfer_mid_boundary(double *fc, double *ff, int Start1, int End1, int Sta
                     t = ex[a] * jxc[coarseisnindex1(I, J, K)] + ey[a] * jyc[coarseisnindex1(I, J, K)] + ez[a] * jzc[coarseisnindex1(I, J, K)];
                     feqc[coarseindex(I, J, K, a)] = w[a] * rhoc[coarseisnindex1(I, J, K)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
                     dist_l[a] = feqc[coarseindex(I, J, K, a)] + (tauf / tauc) * (fc[coarseindex(I, J, K, a)] - feqc[coarseindex(I, J, K, a)]) / alpha;
-                    dist_neq_l[0][a] = (tauf / tauc) * (fc[coarseindex(I, J, K, a)] - feqc[coarseindex(I, J, K, a)]) / alpha;
+                    // dist_neq_l[0][a] = (tauf / tauc) * (fc[coarseindex(I, J, K, a)] - feqc[coarseindex(I, J, K, a)]) / alpha;
                 }
 
-                l = 0.0;
-                m = 0.0;
-                n = 0.0;
-                p = 0.0;
+                // l = 0.0;
+                // m = 0.0;
+                // n = 0.0;
+                // p = 0.0;
 
-                for (a = 0; a < 19; a++)
-                {
-                    l += dist_l[a];
-                    m += ex[a] * dist_l[a];
-                    n += ey[a] * dist_l[a];
-                    p += ez[a] * dist_l[a];
-                }
-                rho_l = l;
-                jx_l = m / rho_l;
-                jy_l = n / rho_l;
-                jz_l = p / rho_l;
+                // for (a = 0; a < 19; a++)
+                // {
+                //     l += dist_l[a];
+                //     m += ex[a] * dist_l[a];
+                //     n += ey[a] * dist_l[a];
+                //     p += ez[a] * dist_l[a];
+                // }
+                // rho_l = l;
+                // jx_l = m / rho_l;
+                // jy_l = n / rho_l;
+                // jz_l = p / rho_l;
 
-                //******Find the non equilibrium points for i=nx, i=nx-2, i=nx-4
-                for (q = 1, i = nx; i >= nx - 4; i -= 2, q++)
-                {
-                    l = 0.0;
-                    m = 0.0;
-                    n = 0.0;
-                    p = 0.0;
+                // //******Find the non equilibrium points for i=nx, i=nx-2, i=nx-4
+                // for (q = 1, i = nx; i >= nx - 4; i -= 2, q++)
+                // {
+                //     l = 0.0;
+                //     m = 0.0;
+                //     n = 0.0;
+                //     p = 0.0;
 
-                    for (a = 0; a < 19; a++)
-                    {
-                        l += ff[fineindex(i, j, k, a)];
-                        m += ex[a] * ff[fineindex(i, j, k, a)];
-                        n += ey[a] * ff[fineindex(i, j, k, a)];
-                        p += ez[a] * ff[fineindex(i, j, k, a)];
-                    }
-                    rhof[fineisnindex1(i, j, k)] = l;
-                    jxf[fineisnindex1(i, j, k)] = m / rhof[fineisnindex1(i, j, k)];
-                    jyf[fineisnindex1(i, j, k)] = n / rhof[fineisnindex1(i, j, k)];
-                    jzf[fineisnindex1(i, j, k)] = p / rhof[fineisnindex1(i, j, k)];
+                //     for (a = 0; a < 19; a++)
+                //     {
+                //         l += ff[fineindex(i, j, k, a)];
+                //         m += ex[a] * ff[fineindex(i, j, k, a)];
+                //         n += ey[a] * ff[fineindex(i, j, k, a)];
+                //         p += ez[a] * ff[fineindex(i, j, k, a)];
+                //     }
+                //     rhof[fineisnindex1(i, j, k)] = l;
+                //     jxf[fineisnindex1(i, j, k)] = m / rhof[fineisnindex1(i, j, k)];
+                //     jyf[fineisnindex1(i, j, k)] = n / rhof[fineisnindex1(i, j, k)];
+                //     jzf[fineisnindex1(i, j, k)] = p / rhof[fineisnindex1(i, j, k)];
 
-                    u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+                //     u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
-                    for (a = 0; a < 19; a++)
-                    {
-                        t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                        feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                        dist_neq_l[q][a] = ff[fineindex(i, j, k, a)] - feqf[fineindex(i, j, k, a)]; // Non equilibrium distribution for j=-2 point
-                    }
-                }
+                //     for (a = 0; a < 19; a++)
+                //     {
+                //         t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                //         feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                //         dist_neq_l[q][a] = ff[fineindex(i, j, k, a)] - feqf[fineindex(i, j, k, a)]; // Non equilibrium distribution for j=-2 point
+                //     }
+                // }
 
-                //*****4 point langrangian interpolation of the conserved quantities****
+                // //*****4 point langrangian interpolation of the conserved quantities****
 
-                jxf[fineisnindex1(nx - 1, j, k)] = (-jx_l + 9.0 * jxf[fineisnindex1(nx, j, k)] + 9.0 * jxf[fineisnindex1(nx - 2, j, k)] - jxf[fineisnindex1(nx - 4, j, k)]) / 16.0;
-                jyf[fineisnindex1(nx - 1, j, k)] = (-jy_l + 9.0 * jyf[fineisnindex1(nx, j, k)] + 9.0 * jyf[fineisnindex1(nx - 2, j, k)] - jyf[fineisnindex1(nx - 4, j, k)]) / 16.0;
-                jzf[fineisnindex1(nx - 1, j, k)] = (-jz_l + 9.0 * jzf[fineisnindex1(nx, j, k)] + 9.0 * jzf[fineisnindex1(nx - 2, j, k)] - jzf[fineisnindex1(nx - 4, j, k)]) / 16.0;
-                rhof[fineisnindex1(nx - 1, j, k)] = (-rho_l + 9.0 * rhof[fineisnindex1(nx, j, k)] + 9.0 * rhof[fineisnindex1(nx - 2, j, k)] - rhof[fineisnindex1(nx - 4, j, k)]) / 16.0;
+                // jxf[fineisnindex1(nx - 1, j, k)] = (-jx_l + 9.0 * jxf[fineisnindex1(nx, j, k)] + 9.0 * jxf[fineisnindex1(nx - 2, j, k)] - jxf[fineisnindex1(nx - 4, j, k)]) / 16.0;
+                // jyf[fineisnindex1(nx - 1, j, k)] = (-jy_l + 9.0 * jyf[fineisnindex1(nx, j, k)] + 9.0 * jyf[fineisnindex1(nx - 2, j, k)] - jyf[fineisnindex1(nx - 4, j, k)]) / 16.0;
+                // jzf[fineisnindex1(nx - 1, j, k)] = (-jz_l + 9.0 * jzf[fineisnindex1(nx, j, k)] + 9.0 * jzf[fineisnindex1(nx - 2, j, k)] - jzf[fineisnindex1(nx - 4, j, k)]) / 16.0;
+                // rhof[fineisnindex1(nx - 1, j, k)] = (-rho_l + 9.0 * rhof[fineisnindex1(nx, j, k)] + 9.0 * rhof[fineisnindex1(nx - 2, j, k)] - rhof[fineisnindex1(nx - 4, j, k)]) / 16.0;
 
-                u2 = jxf[fineisnindex1(nx - 1, j, k)] * jxf[fineisnindex1(nx - 1, j, k)] + jyf[fineisnindex1(nx - 1, j, k)] * jyf[fineisnindex1(nx - 1, j, k)] + jzf[fineisnindex1(nx - 1, j, k)] * jzf[fineisnindex1(nx - 1, j, k)];
+                // u2 = jxf[fineisnindex1(nx - 1, j, k)] * jxf[fineisnindex1(nx - 1, j, k)] + jyf[fineisnindex1(nx - 1, j, k)] * jyf[fineisnindex1(nx - 1, j, k)] + jzf[fineisnindex1(nx - 1, j, k)] * jzf[fineisnindex1(nx - 1, j, k)];
 
-                //****** Equilibrium distribution at i=nx-1*******
-                for (a = 0; a < 19; a++)
-                {
-                    t = ex[a] * jxf[fineisnindex1(nx - 1, j, k)] + ey[a] * jyf[fineisnindex1(nx - 1, j, k)];
-                    feqf[fineindex(nx - 1, j, k, a)] = w[a] * rhof[fineisnindex1(nx - 1, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                }
+                // //****** Equilibrium distribution at i=nx-1*******
+                // for (a = 0; a < 19; a++)
+                // {
+                //     t = ex[a] * jxf[fineisnindex1(nx - 1, j, k)] + ey[a] * jyf[fineisnindex1(nx - 1, j, k)];
+                //     feqf[fineindex(nx - 1, j, k, a)] = w[a] * rhof[fineisnindex1(nx - 1, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // }
 
-                //*****Find Non-equilibrium distribution at i=nx-1 using 4 point langrangian interpolation*******
-                for (a = 0; a < 19; a++)
-                {
-                    fneqf[a] = (-dist_neq_l[0][a] + 9.0 * dist_neq_l[1][a] + 9.0 * dist_neq_l[2][a] - dist_neq_l[3][a]) / 16.0;
-                }
+                // //*****Find Non-equilibrium distribution at i=nx-1 using 4 point langrangian interpolation*******
+                // for (a = 0; a < 19; a++)
+                // {
+                //     fneqf[a] = (-dist_neq_l[0][a] + 9.0 * dist_neq_l[1][a] + 9.0 * dist_neq_l[2][a] - dist_neq_l[3][a]) / 16.0;
+                // }
 
                 //*****Find f = feq+fneq******
                 for (i = nx - 1, a = 0; a < 9; a++)
                 {
-                    ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf[a];
+                    // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf[a];
+
+                    ff[fineindex(i, j, k, a)] = (-dist_l[a] + 9.0 * ff[fineindex(nx, j, k, a)] + 9.0 * ff[fineindex(nx - 2, j, k, a)] - ff[fineindex(nx - 4, j, k, a)]) / 16.0;
                 }
             }
         }
@@ -3514,82 +3530,84 @@ void transfer_mid_boundary(double *fc, double *ff, int Start1, int End1, int Sta
                     t = ex[a] * jxc[coarseisnindex1(I, J, K)] + ey[a] * jyc[coarseisnindex1(I, J, K)] + ez[a] * jzc[coarseisnindex1(I, J, K)];
                     feqc[coarseindex(I, J, K, a)] = w[a] * rhoc[coarseisnindex1(I, J, K)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
                     dist_l[a] = feqc[coarseindex(I, J, K, a)] + (tauf / tauc) * (fc[coarseindex(I, J, K, a)] - feqc[coarseindex(I, J, K, a)]) / alpha;
-                    dist_neq_l[0][a] = (tauf / tauc) * (fc[coarseindex(I, J, K, a)] - feqc[coarseindex(I, J, K, a)]) / alpha;
+                    // dist_neq_l[0][a] = (tauf / tauc) * (fc[coarseindex(I, J, K, a)] - feqc[coarseindex(I, J, K, a)]) / alpha;
                 }
 
-                l = 0.0;
-                m = 0.0;
-                n = 0.0;
-                p = 0.0;
+                // l = 0.0;
+                // m = 0.0;
+                // n = 0.0;
+                // p = 0.0;
 
-                for (a = 0; a < 19; a++)
-                {
-                    l += dist_l[a];
-                    m += ex[a] * dist_l[a];
-                    n += ey[a] * dist_l[a];
-                    p += ez[a] * dist_l[a];
-                }
-                rho_l = l;
-                jx_l = m / rho_l;
-                jy_l = n / rho_l;
-                jz_l = p / rho_l;
+                // for (a = 0; a < 19; a++)
+                // {
+                //     l += dist_l[a];
+                //     m += ex[a] * dist_l[a];
+                //     n += ey[a] * dist_l[a];
+                //     p += ez[a] * dist_l[a];
+                // }
+                // rho_l = l;
+                // jx_l = m / rho_l;
+                // jy_l = n / rho_l;
+                // jz_l = p / rho_l;
 
-                //******Find the non equilibrium points for j=ny, j=ny-2, j=ny-4
-                for (q = 1, j = ny; j >= ny - 4; j -= 2, q++)
-                {
-                    l = 0.0;
-                    m = 0.0;
-                    n = 0.0;
-                    p = 0.0;
+                // //******Find the non equilibrium points for j=ny, j=ny-2, j=ny-4
+                // for (q = 1, j = ny; j >= ny - 4; j -= 2, q++)
+                // {
+                //     l = 0.0;
+                //     m = 0.0;
+                //     n = 0.0;
+                //     p = 0.0;
 
-                    for (a = 0; a < 19; a++)
-                    {
-                        l += ff[fineindex(i, j, k, a)];
-                        m += ex[a] * ff[fineindex(i, j, k, a)];
-                        n += ey[a] * ff[fineindex(i, j, k, a)];
-                        p += ez[a] * ff[fineindex(i, j, k, a)];
-                    }
-                    rhof[fineisnindex1(i, j, k)] = l;
-                    jxf[fineisnindex1(i, j, k)] = m / rhof[fineisnindex1(i, j, k)];
-                    jyf[fineisnindex1(i, j, k)] = n / rhof[fineisnindex1(i, j, k)];
-                    jzf[fineisnindex1(i, j, k)] = p / rhof[fineisnindex1(i, j, k)];
+                //     for (a = 0; a < 19; a++)
+                //     {
+                //         l += ff[fineindex(i, j, k, a)];
+                //         m += ex[a] * ff[fineindex(i, j, k, a)];
+                //         n += ey[a] * ff[fineindex(i, j, k, a)];
+                //         p += ez[a] * ff[fineindex(i, j, k, a)];
+                //     }
+                //     rhof[fineisnindex1(i, j, k)] = l;
+                //     jxf[fineisnindex1(i, j, k)] = m / rhof[fineisnindex1(i, j, k)];
+                //     jyf[fineisnindex1(i, j, k)] = n / rhof[fineisnindex1(i, j, k)];
+                //     jzf[fineisnindex1(i, j, k)] = p / rhof[fineisnindex1(i, j, k)];
 
-                    u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+                //     u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
-                    for (a = 0; a < 19; a++)
-                    {
-                        t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                        feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                        dist_neq_l[q][a] = ff[fineindex(i, j, k, a)] - feqf[fineindex(i, j, k, a)]; // Non equilibrium distribution for j=-2 point
-                    }
-                }
+                //     for (a = 0; a < 19; a++)
+                //     {
+                //         t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                //         feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                //         dist_neq_l[q][a] = ff[fineindex(i, j, k, a)] - feqf[fineindex(i, j, k, a)]; // Non equilibrium distribution for j=-2 point
+                //     }
+                // }
 
-                //*****4 point langrangian interpolation of the conserved quantities****
+                // //*****4 point langrangian interpolation of the conserved quantities****
 
-                jxf[fineisnindex1(i, ny - 1, k)] = (-jx_l + 9.0 * jxf[fineisnindex1(i, ny, k)] + 9.0 * jxf[fineisnindex1(i, ny - 2, k)] - jxf[fineisnindex1(i, ny - 4, k)]) / 16.0;
-                jyf[fineisnindex1(i, ny - 1, k)] = (-jy_l + 9.0 * jyf[fineisnindex1(i, ny, k)] + 9.0 * jyf[fineisnindex1(i, ny - 2, k)] - jyf[fineisnindex1(i, ny - 4, k)]) / 16.0;
-                jzf[fineisnindex1(i, ny - 1, k)] = (-jz_l + 9.0 * jzf[fineisnindex1(i, ny, k)] + 9.0 * jzf[fineisnindex1(i, ny - 2, k)] - jzf[fineisnindex1(i, ny - 4, k)]) / 16.0;
-                rhof[fineisnindex1(i, ny - 1, k)] = (-rho_l + 9.0 * rhof[fineisnindex1(i, ny, k)] + 9.0 * rhof[fineisnindex1(i, ny - 2, k)] - rhof[fineisnindex1(i, ny - 4, k)]) / 16.0;
+                // jxf[fineisnindex1(i, ny - 1, k)] = (-jx_l + 9.0 * jxf[fineisnindex1(i, ny, k)] + 9.0 * jxf[fineisnindex1(i, ny - 2, k)] - jxf[fineisnindex1(i, ny - 4, k)]) / 16.0;
+                // jyf[fineisnindex1(i, ny - 1, k)] = (-jy_l + 9.0 * jyf[fineisnindex1(i, ny, k)] + 9.0 * jyf[fineisnindex1(i, ny - 2, k)] - jyf[fineisnindex1(i, ny - 4, k)]) / 16.0;
+                // jzf[fineisnindex1(i, ny - 1, k)] = (-jz_l + 9.0 * jzf[fineisnindex1(i, ny, k)] + 9.0 * jzf[fineisnindex1(i, ny - 2, k)] - jzf[fineisnindex1(i, ny - 4, k)]) / 16.0;
+                // rhof[fineisnindex1(i, ny - 1, k)] = (-rho_l + 9.0 * rhof[fineisnindex1(i, ny, k)] + 9.0 * rhof[fineisnindex1(i, ny - 2, k)] - rhof[fineisnindex1(i, ny - 4, k)]) / 16.0;
 
-                u2 = jxf[fineisnindex1(i, ny - 1, k)] * jxf[fineisnindex1(i, ny - 1, k)] + jyf[fineisnindex1(i, ny - 1, k)] * jyf[fineisnindex1(i, ny - 1, k)] + jzf[fineisnindex1(i, ny - 1, k)] * jzf[fineisnindex1(i, ny - 1, k)];
+                // u2 = jxf[fineisnindex1(i, ny - 1, k)] * jxf[fineisnindex1(i, ny - 1, k)] + jyf[fineisnindex1(i, ny - 1, k)] * jyf[fineisnindex1(i, ny - 1, k)] + jzf[fineisnindex1(i, ny - 1, k)] * jzf[fineisnindex1(i, ny - 1, k)];
 
-                //*****Equilibrium distribution at j=ny-1 ********
-                for (a = 0; a < 19; a++)
-                {
-                    t = ex[a] * jxf[fineisnindex1(i, ny - 1, k)] + ey[a] * jyf[fineisnindex1(i, ny - 1, k)] + ez[a] * jzf[fineisnindex1(i, ny - 1, k)];
-                    feqf[fineindex(i, ny - 1, k, a)] = w[a] * rhof[fineisnindex1(i, ny - 1, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                }
+                // //*****Equilibrium distribution at j=ny-1 ********
+                // for (a = 0; a < 19; a++)
+                // {
+                //     t = ex[a] * jxf[fineisnindex1(i, ny - 1, k)] + ey[a] * jyf[fineisnindex1(i, ny - 1, k)] + ez[a] * jzf[fineisnindex1(i, ny - 1, k)];
+                //     feqf[fineindex(i, ny - 1, k, a)] = w[a] * rhof[fineisnindex1(i, ny - 1, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // }
 
-                //*****Find Non-equilibrium distribution at j=ny-1 using 4 point langrangian interpolation*******
-                for (a = 0; a < 19; a++)
-                {
-                    fneqf[a] = (-dist_neq_l[0][a] + 9.0 * dist_neq_l[1][a] + 9.0 * dist_neq_l[2][a] - dist_neq_l[3][a]) / 16.0;
-                }
+                // //*****Find Non-equilibrium distribution at j=ny-1 using 4 point langrangian interpolation*******
+                // for (a = 0; a < 19; a++)
+                // {
+                //     fneqf[a] = (-dist_neq_l[0][a] + 9.0 * dist_neq_l[1][a] + 9.0 * dist_neq_l[2][a] - dist_neq_l[3][a]) / 16.0;
+                // }
 
                 //*****Find f = feq+fneq******
                 for (j = ny - 1, a = 0; a < 19; a++)
                 {
-                    ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf[a];
+                    // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf[a];
+
+                    ff[fineindex(i, j, k, a)] = (-dist_l[a] + 9.0 * ff[fineindex(i, ny, k, a)] + 9.0 * ff[fineindex(i, ny - 2, k, a)] - ff[fineindex(i, ny - 4, k, a)]) / 16.0;
                 }
             }
         }
@@ -3624,82 +3642,84 @@ void transfer_mid_boundary(double *fc, double *ff, int Start1, int End1, int Sta
                     t = ex[a] * jxc[coarseisnindex1(I, J, K)] + ey[a] * jyc[coarseisnindex1(I, J, K)] + ez[a] * jzc[coarseisnindex1(I, J, K)];
                     feqc[coarseindex(I, J, K, a)] = w[a] * rhoc[coarseisnindex1(I, J, K)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
                     dist_l[a] = feqc[coarseindex(I, J, K, a)] + (tauf / tauc) * (fc[coarseindex(I, J, K, a)] - feqc[coarseindex(I, J, K, a)]) / alpha;
-                    dist_neq_l[0][a] = (tauf / tauc) * (fc[coarseindex(I, J, K, a)] - feqc[coarseindex(I, J, K, a)]) / alpha;
+                    // dist_neq_l[0][a] = (tauf / tauc) * (fc[coarseindex(I, J, K, a)] - feqc[coarseindex(I, J, K, a)]) / alpha;
                 }
 
-                l = 0.0;
-                m = 0.0;
-                n = 0.0;
-                p = 0.0;
+                // l = 0.0;
+                // m = 0.0;
+                // n = 0.0;
+                // p = 0.0;
 
-                for (a = 0; a < 19; a++)
-                {
-                    l += dist_l[a];
-                    m += ex[a] * dist_l[a];
-                    n += ey[a] * dist_l[a];
-                    p += ez[a] * dist_l[a];
-                }
-                rho_l = l;
-                jx_l = m / rho_l;
-                jy_l = n / rho_l;
-                jz_l = p / rho_l;
+                // for (a = 0; a < 19; a++)
+                // {
+                //     l += dist_l[a];
+                //     m += ex[a] * dist_l[a];
+                //     n += ey[a] * dist_l[a];
+                //     p += ez[a] * dist_l[a];
+                // }
+                // rho_l = l;
+                // jx_l = m / rho_l;
+                // jy_l = n / rho_l;
+                // jz_l = p / rho_l;
 
-                //******Find the non equilibrium points for i=0,i=2,i=4
-                for (q = 1, i = 0; i <= 4; i += 2, q++)
-                {
-                    l = 0.0;
-                    m = 0.0;
-                    n = 0.0;
-                    p = 0.0;
+                // //******Find the non equilibrium points for i=0,i=2,i=4
+                // for (q = 1, i = 0; i <= 4; i += 2, q++)
+                // {
+                //     l = 0.0;
+                //     m = 0.0;
+                //     n = 0.0;
+                //     p = 0.0;
 
-                    for (a = 0; a < 19; a++)
-                    {
-                        l += ff[fineindex(i, j, k, a)];
-                        m += ex[a] * ff[fineindex(i, j, k, a)];
-                        n += ey[a] * ff[fineindex(i, j, k, a)];
-                        p += ez[a] * ff[fineindex(i, j, k, a)];
-                    }
-                    rhof[fineisnindex1(i, j, k)] = l;
-                    jxf[fineisnindex1(i, j, k)] = m / rhof[fineisnindex1(i, j, k)];
-                    jyf[fineisnindex1(i, j, k)] = n / rhof[fineisnindex1(i, j, k)];
-                    jzf[fineisnindex1(i, j, k)] = p / rhof[fineisnindex1(i, j, k)];
+                //     for (a = 0; a < 19; a++)
+                //     {
+                //         l += ff[fineindex(i, j, k, a)];
+                //         m += ex[a] * ff[fineindex(i, j, k, a)];
+                //         n += ey[a] * ff[fineindex(i, j, k, a)];
+                //         p += ez[a] * ff[fineindex(i, j, k, a)];
+                //     }
+                //     rhof[fineisnindex1(i, j, k)] = l;
+                //     jxf[fineisnindex1(i, j, k)] = m / rhof[fineisnindex1(i, j, k)];
+                //     jyf[fineisnindex1(i, j, k)] = n / rhof[fineisnindex1(i, j, k)];
+                //     jzf[fineisnindex1(i, j, k)] = p / rhof[fineisnindex1(i, j, k)];
 
-                    u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+                //     u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
-                    for (a = 0; a < 19; a++)
-                    {
-                        t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                        feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                        dist_neq_l[q][a] = ff[fineindex(i, j, k, a)] - feqf[fineindex(i, j, k, a)]; // Non equilibrium distribution for j=-2 point
-                    }
-                }
+                //     for (a = 0; a < 19; a++)
+                //     {
+                //         t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                //         feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                //         dist_neq_l[q][a] = ff[fineindex(i, j, k, a)] - feqf[fineindex(i, j, k, a)]; // Non equilibrium distribution for j=-2 point
+                //     }
+                // }
 
-                //*****4 point langrangian interpolation of the conserved quantities****
+                // //*****4 point langrangian interpolation of the conserved quantities****
 
-                jxf[fineisnindex1(1, j, k)] = (-jx_l + 9.0 * jxf[fineisnindex1(0, j, k)] + 9.0 * jxf[fineisnindex1(2, j, k)] - jxf[fineisnindex1(4, j, k)]) / 16.0;
-                jyf[fineisnindex1(1, j, k)] = (-jy_l + 9.0 * jyf[fineisnindex1(0, j, k)] + 9.0 * jyf[fineisnindex1(2, j, k)] - jyf[fineisnindex1(4, j, k)]) / 16.0;
-                jzf[fineisnindex1(1, j, k)] = (-jz_l + 9.0 * jzf[fineisnindex1(0, j, k)] + 9.0 * jzf[fineisnindex1(2, j, k)] - jzf[fineisnindex1(4, j, k)]) / 16.0;
-                rhof[fineisnindex1(1, j, k)] = (-rho_l + 9.0 * rhof[fineisnindex1(0, j, k)] + 9.0 * rhof[fineisnindex1(2, j, k)] - rhof[fineisnindex1(4, j, k)]) / 16.0;
+                // jxf[fineisnindex1(1, j, k)] = (-jx_l + 9.0 * jxf[fineisnindex1(0, j, k)] + 9.0 * jxf[fineisnindex1(2, j, k)] - jxf[fineisnindex1(4, j, k)]) / 16.0;
+                // jyf[fineisnindex1(1, j, k)] = (-jy_l + 9.0 * jyf[fineisnindex1(0, j, k)] + 9.0 * jyf[fineisnindex1(2, j, k)] - jyf[fineisnindex1(4, j, k)]) / 16.0;
+                // jzf[fineisnindex1(1, j, k)] = (-jz_l + 9.0 * jzf[fineisnindex1(0, j, k)] + 9.0 * jzf[fineisnindex1(2, j, k)] - jzf[fineisnindex1(4, j, k)]) / 16.0;
+                // rhof[fineisnindex1(1, j, k)] = (-rho_l + 9.0 * rhof[fineisnindex1(0, j, k)] + 9.0 * rhof[fineisnindex1(2, j, k)] - rhof[fineisnindex1(4, j, k)]) / 16.0;
 
-                u2 = jxf[fineisnindex1(1, j, k)] * jxf[fineisnindex1(1, j, k)] + jyf[fineisnindex1(1, j, k)] * jyf[fineisnindex1(1, j, k)] + jzf[fineisnindex1(1, j, k)] * jzf[fineisnindex1(1, j, k)];
+                // u2 = jxf[fineisnindex1(1, j, k)] * jxf[fineisnindex1(1, j, k)] + jyf[fineisnindex1(1, j, k)] * jyf[fineisnindex1(1, j, k)] + jzf[fineisnindex1(1, j, k)] * jzf[fineisnindex1(1, j, k)];
 
-                //****** Equilibrium distribution at i=1*******
-                for (a = 0; a < 19; a++)
-                {
-                    t = ex[a] * jxf[fineisnindex1(1, j, k)] + ey[a] * jyf[fineisnindex1(1, j, k)] + ez[a] * jzf[fineisnindex1(1, j, k)];
-                    feqf[fineindex(1, j, k, a)] = w[a] * rhof[fineisnindex1(1, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                }
+                // //****** Equilibrium distribution at i=1*******
+                // for (a = 0; a < 19; a++)
+                // {
+                //     t = ex[a] * jxf[fineisnindex1(1, j, k)] + ey[a] * jyf[fineisnindex1(1, j, k)] + ez[a] * jzf[fineisnindex1(1, j, k)];
+                //     feqf[fineindex(1, j, k, a)] = w[a] * rhof[fineisnindex1(1, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // }
 
-                //*****Find Non-equilibrium distribution at i=1 using 4 point langrangian interpolation*******
-                for (a = 0; a < 19; a++)
-                {
-                    fneqf[a] = (-dist_neq_l[0][a] + 9.0 * dist_neq_l[1][a] + 9.0 * dist_neq_l[2][a] - dist_neq_l[3][a]) / 16.0;
-                }
+                // //*****Find Non-equilibrium distribution at i=1 using 4 point langrangian interpolation*******
+                // for (a = 0; a < 19; a++)
+                // {
+                //     fneqf[a] = (-dist_neq_l[0][a] + 9.0 * dist_neq_l[1][a] + 9.0 * dist_neq_l[2][a] - dist_neq_l[3][a]) / 16.0;
+                // }
 
                 //*****Find f = feq+fneq******
                 for (i = 1, a = 0; a < 19; a++)
                 {
-                    ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf[a];
+                    // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf[a];
+
+                    ff[fineindex(i, j, k, a)] = (-dist_l[a] + 9.0 * ff[fineindex(0, j, k, a)] + 9.0 * ff[fineindex(2, j, k, a)] - ff[fineindex(4, j, k, a)]) / 16.0;
                 }
             }
         }
@@ -3734,82 +3754,84 @@ void transfer_mid_boundary(double *fc, double *ff, int Start1, int End1, int Sta
                     t = ex[a] * jxc[coarseisnindex1(I, J, K)] + ey[a] * jyc[coarseisnindex1(I, J, K)] + ez[a] * jzc[coarseisnindex1(I, J, K)];
                     feqc[coarseindex(I, J, K, a)] = w[a] * rhoc[coarseisnindex1(I, J, K)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
                     dist_l[a] = feqc[coarseindex(I, J, K, a)] + (tauf / tauc) * (fc[coarseindex(I, J, K, a)] - feqc[coarseindex(I, J, K, a)]) / alpha;
-                    dist_neq_l[0][a] = (tauf / tauc) * (fc[coarseindex(I, J, K, a)] - feqc[coarseindex(I, J, K, a)]) / alpha;
+                    // dist_neq_l[0][a] = (tauf / tauc) * (fc[coarseindex(I, J, K, a)] - feqc[coarseindex(I, J, K, a)]) / alpha;
                 }
 
-                l = 0.0;
-                m = 0.0;
-                n = 0.0;
-                p = 0.0;
+                // l = 0.0;
+                // m = 0.0;
+                // n = 0.0;
+                // p = 0.0;
 
-                for (a = 0; a < 19; a++)
-                {
-                    l += dist_l[a];
-                    m += ex[a] * dist_l[a];
-                    n += ey[a] * dist_l[a];
-                    p += ez[a] * dist_l[a];
-                }
-                rho_l = l;
-                jx_l = m / rho_l;
-                jy_l = n / rho_l;
-                jz_l = p / rho_l;
+                // for (a = 0; a < 19; a++)
+                // {
+                //     l += dist_l[a];
+                //     m += ex[a] * dist_l[a];
+                //     n += ey[a] * dist_l[a];
+                //     p += ez[a] * dist_l[a];
+                // }
+                // rho_l = l;
+                // jx_l = m / rho_l;
+                // jy_l = n / rho_l;
+                // jz_l = p / rho_l;
 
-                //******Find the non equilibrium points for k=0,k=2,k=4
-                for (q = 1, k = 0; k <= 4; k += 2, q++)
-                {
-                    l = 0.0;
-                    m = 0.0;
-                    n = 0.0;
-                    p = 0.0;
+                // //******Find the non equilibrium points for k=0,k=2,k=4
+                // for (q = 1, k = 0; k <= 4; k += 2, q++)
+                // {
+                //     l = 0.0;
+                //     m = 0.0;
+                //     n = 0.0;
+                //     p = 0.0;
 
-                    for (a = 0; a < 19; a++)
-                    {
-                        l += ff[fineindex(i, j, k, a)];
-                        m += ex[a] * ff[fineindex(i, j, k, a)];
-                        n += ey[a] * ff[fineindex(i, j, k, a)];
-                        p += ez[a] * ff[fineindex(i, j, k, a)];
-                    }
-                    rhof[fineisnindex1(i, j, k)] = l;
-                    jxf[fineisnindex1(i, j, k)] = m / rhof[fineisnindex1(i, j, k)];
-                    jyf[fineisnindex1(i, j, k)] = n / rhof[fineisnindex1(i, j, k)];
-                    jzf[fineisnindex1(i, j, k)] = p / rhof[fineisnindex1(i, j, k)];
+                //     for (a = 0; a < 19; a++)
+                //     {
+                //         l += ff[fineindex(i, j, k, a)];
+                //         m += ex[a] * ff[fineindex(i, j, k, a)];
+                //         n += ey[a] * ff[fineindex(i, j, k, a)];
+                //         p += ez[a] * ff[fineindex(i, j, k, a)];
+                //     }
+                //     rhof[fineisnindex1(i, j, k)] = l;
+                //     jxf[fineisnindex1(i, j, k)] = m / rhof[fineisnindex1(i, j, k)];
+                //     jyf[fineisnindex1(i, j, k)] = n / rhof[fineisnindex1(i, j, k)];
+                //     jzf[fineisnindex1(i, j, k)] = p / rhof[fineisnindex1(i, j, k)];
 
-                    u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+                //     u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
-                    for (a = 0; a < 19; a++)
-                    {
-                        t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                        feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                        dist_neq_l[q][a] = ff[fineindex(i, j, k, a)] - feqf[fineindex(i, j, k, a)]; // Non equilibrium distribution for j=-2 point
-                    }
-                }
+                //     for (a = 0; a < 19; a++)
+                //     {
+                //         t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                //         feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                //         dist_neq_l[q][a] = ff[fineindex(i, j, k, a)] - feqf[fineindex(i, j, k, a)]; // Non equilibrium distribution for j=-2 point
+                //     }
+                // }
 
-                //*****4 point langrangian interpolation of the conserved quantities****
+                // //*****4 point langrangian interpolation of the conserved quantities****
 
-                jxf[fineisnindex1(i, j, 1)] = (-jx_l + 9.0 * jxf[fineisnindex1(i, j, 0)] + 9.0 * jxf[fineisnindex1(i, j, 2)] - jxf[fineisnindex1(i, j, 4)]) / 16.0;
-                jyf[fineisnindex1(i, j, 1)] = (-jy_l + 9.0 * jyf[fineisnindex1(i, j, 0)] + 9.0 * jyf[fineisnindex1(i, j, 2)] - jyf[fineisnindex1(i, j, 4)]) / 16.0;
-                jzf[fineisnindex1(i, j, 1)] = (-jz_l + 9.0 * jzf[fineisnindex1(i, j, 0)] + 9.0 * jzf[fineisnindex1(i, j, 2)] - jzf[fineisnindex1(i, j, 4)]) / 16.0;
-                rhof[fineisnindex1(i, j, 1)] = (-rho_l + 9.0 * rhof[fineisnindex1(i, j, 0)] + 9.0 * rhof[fineisnindex1(i, j, 2)] - rhof[fineisnindex1(i, j, 4)]) / 16.0;
+                // jxf[fineisnindex1(i, j, 1)] = (-jx_l + 9.0 * jxf[fineisnindex1(i, j, 0)] + 9.0 * jxf[fineisnindex1(i, j, 2)] - jxf[fineisnindex1(i, j, 4)]) / 16.0;
+                // jyf[fineisnindex1(i, j, 1)] = (-jy_l + 9.0 * jyf[fineisnindex1(i, j, 0)] + 9.0 * jyf[fineisnindex1(i, j, 2)] - jyf[fineisnindex1(i, j, 4)]) / 16.0;
+                // jzf[fineisnindex1(i, j, 1)] = (-jz_l + 9.0 * jzf[fineisnindex1(i, j, 0)] + 9.0 * jzf[fineisnindex1(i, j, 2)] - jzf[fineisnindex1(i, j, 4)]) / 16.0;
+                // rhof[fineisnindex1(i, j, 1)] = (-rho_l + 9.0 * rhof[fineisnindex1(i, j, 0)] + 9.0 * rhof[fineisnindex1(i, j, 2)] - rhof[fineisnindex1(i, j, 4)]) / 16.0;
 
-                u2 = jxf[fineisnindex1(i, j, 1)] * jxf[fineisnindex1(i, j, 1)] + jyf[fineisnindex1(i, j, 1)] * jyf[fineisnindex1(i, j, 1)] + jzf[fineisnindex1(i, j, 1)] * jzf[fineisnindex1(i, j, 1)];
+                // u2 = jxf[fineisnindex1(i, j, 1)] * jxf[fineisnindex1(i, j, 1)] + jyf[fineisnindex1(i, j, 1)] * jyf[fineisnindex1(i, j, 1)] + jzf[fineisnindex1(i, j, 1)] * jzf[fineisnindex1(i, j, 1)];
 
-                //****** Equilibrium distribution at i=1*******
-                for (a = 0; a < 19; a++)
-                {
-                    t = ex[a] * jxf[fineisnindex1(i, j, 1)] + ey[a] * jyf[fineisnindex1(i, j, 1)] + ez[a] * jzf[fineisnindex1(i, j, 1)];
-                    feqf[fineindex(i, j, 1, a)] = w[a] * rhof[fineisnindex1(i, j, 1)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                }
+                // //****** Equilibrium distribution at i=1*******
+                // for (a = 0; a < 19; a++)
+                // {
+                //     t = ex[a] * jxf[fineisnindex1(i, j, 1)] + ey[a] * jyf[fineisnindex1(i, j, 1)] + ez[a] * jzf[fineisnindex1(i, j, 1)];
+                //     feqf[fineindex(i, j, 1, a)] = w[a] * rhof[fineisnindex1(i, j, 1)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // }
 
-                //*****Find Non-equilibrium distribution at i=1 using 4 point langrangian interpolation*******
-                for (a = 0; a < 19; a++)
-                {
-                    fneqf[a] = (-dist_neq_l[0][a] + 9.0 * dist_neq_l[1][a] + 9.0 * dist_neq_l[2][a] - dist_neq_l[3][a]) / 16.0;
-                }
+                // //*****Find Non-equilibrium distribution at i=1 using 4 point langrangian interpolation*******
+                // for (a = 0; a < 19; a++)
+                // {
+                //     fneqf[a] = (-dist_neq_l[0][a] + 9.0 * dist_neq_l[1][a] + 9.0 * dist_neq_l[2][a] - dist_neq_l[3][a]) / 16.0;
+                // }
 
                 //*****Find f = feq+fneq******
                 for (k = 1, a = 0; a < 19; a++)
                 {
-                    ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf[a];
+                    // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf[a];
+
+                    ff[fineindex(i, j, k, a)] = (-dist_l[a] + 9.0 * ff[fineindex(i, j, 0, a)] + 9.0 * ff[fineindex(i, j, 2, a)] - ff[fineindex(i, j, 4, a)]) / 16.0;
                 }
             }
         }
@@ -3844,82 +3866,84 @@ void transfer_mid_boundary(double *fc, double *ff, int Start1, int End1, int Sta
                     t = ex[a] * jxc[coarseisnindex1(I, J, K)] + ey[a] * jyc[coarseisnindex1(I, J, K)] + ez[a] * jzc[coarseisnindex1(I, J, K)];
                     feqc[coarseindex(I, J, K, a)] = w[a] * rhoc[coarseisnindex1(I, J, K)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
                     dist_l[a] = feqc[coarseindex(I, J, K, a)] + (tauf / tauc) * (fc[coarseindex(I, J, K, a)] - feqc[coarseindex(I, J, K, a)]) / alpha;
-                    dist_neq_l[0][a] = (tauf / tauc) * (fc[coarseindex(I, J, K, a)] - feqc[coarseindex(I, J, K, a)]) / alpha;
+                    // dist_neq_l[0][a] = (tauf / tauc) * (fc[coarseindex(I, J, K, a)] - feqc[coarseindex(I, J, K, a)]) / alpha;
                 }
 
-                l = 0.0;
-                m = 0.0;
-                n = 0.0;
-                p = 0.0;
+                // l = 0.0;
+                // m = 0.0;
+                // n = 0.0;
+                // p = 0.0;
 
-                for (a = 0; a < 19; a++)
-                {
-                    l += dist_l[a];
-                    m += ex[a] * dist_l[a];
-                    n += ey[a] * dist_l[a];
-                    p += ez[a] * dist_l[a];
-                }
-                rho_l = l;
-                jx_l = m / rho_l;
-                jy_l = n / rho_l;
-                jz_l = p / rho_l;
+                // for (a = 0; a < 19; a++)
+                // {
+                //     l += dist_l[a];
+                //     m += ex[a] * dist_l[a];
+                //     n += ey[a] * dist_l[a];
+                //     p += ez[a] * dist_l[a];
+                // }
+                // rho_l = l;
+                // jx_l = m / rho_l;
+                // jy_l = n / rho_l;
+                // jz_l = p / rho_l;
 
-                //******Find the non equilibrium points for k=0,k=2,k=4
-                for (q = 1, k = nz; k >= nz - 4; k -= 2, q++)
-                {
-                    l = 0.0;
-                    m = 0.0;
-                    n = 0.0;
-                    p = 0.0;
+                // //******Find the non equilibrium points for k=0,k=2,k=4
+                // for (q = 1, k = nz; k >= nz - 4; k -= 2, q++)
+                // {
+                //     l = 0.0;
+                //     m = 0.0;
+                //     n = 0.0;
+                //     p = 0.0;
 
-                    for (a = 0; a < 19; a++)
-                    {
-                        l += ff[fineindex(i, j, k, a)];
-                        m += ex[a] * ff[fineindex(i, j, k, a)];
-                        n += ey[a] * ff[fineindex(i, j, k, a)];
-                        p += ez[a] * ff[fineindex(i, j, k, a)];
-                    }
-                    rhof[fineisnindex1(i, j, k)] = l;
-                    jxf[fineisnindex1(i, j, k)] = m / rhof[fineisnindex1(i, j, k)];
-                    jyf[fineisnindex1(i, j, k)] = n / rhof[fineisnindex1(i, j, k)];
-                    jzf[fineisnindex1(i, j, k)] = p / rhof[fineisnindex1(i, j, k)];
+                //     for (a = 0; a < 19; a++)
+                //     {
+                //         l += ff[fineindex(i, j, k, a)];
+                //         m += ex[a] * ff[fineindex(i, j, k, a)];
+                //         n += ey[a] * ff[fineindex(i, j, k, a)];
+                //         p += ez[a] * ff[fineindex(i, j, k, a)];
+                //     }
+                //     rhof[fineisnindex1(i, j, k)] = l;
+                //     jxf[fineisnindex1(i, j, k)] = m / rhof[fineisnindex1(i, j, k)];
+                //     jyf[fineisnindex1(i, j, k)] = n / rhof[fineisnindex1(i, j, k)];
+                //     jzf[fineisnindex1(i, j, k)] = p / rhof[fineisnindex1(i, j, k)];
 
-                    u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
+                //     u2 = jxf[fineisnindex1(i, j, k)] * jxf[fineisnindex1(i, j, k)] + jyf[fineisnindex1(i, j, k)] * jyf[fineisnindex1(i, j, k)] + jzf[fineisnindex1(i, j, k)] * jzf[fineisnindex1(i, j, k)];
 
-                    for (a = 0; a < 19; a++)
-                    {
-                        t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
-                        feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                        dist_neq_l[q][a] = ff[fineindex(i, j, k, a)] - feqf[fineindex(i, j, k, a)]; // Non equilibrium distribution for j=-2 point
-                    }
-                }
+                //     for (a = 0; a < 19; a++)
+                //     {
+                //         t = ex[a] * jxf[fineisnindex1(i, j, k)] + ey[a] * jyf[fineisnindex1(i, j, k)] + ez[a] * jzf[fineisnindex1(i, j, k)];
+                //         feqf[fineindex(i, j, k, a)] = w[a] * rhof[fineisnindex1(i, j, k)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                //         dist_neq_l[q][a] = ff[fineindex(i, j, k, a)] - feqf[fineindex(i, j, k, a)]; // Non equilibrium distribution for j=-2 point
+                //     }
+                // }
 
-                //*****4 point langrangian interpolation of the conserved quantities****
+                // //*****4 point langrangian interpolation of the conserved quantities****
 
-                jxf[fineisnindex1(i, j, nz - 1)] = (-jx_l + 9.0 * jxf[fineisnindex1(i, j, nz)] + 9.0 * jxf[fineisnindex1(i, j, nz - 2)] - jxf[fineisnindex1(i, j, nz - 4)]) / 16.0;
-                jyf[fineisnindex1(i, j, nz - 1)] = (-jy_l + 9.0 * jyf[fineisnindex1(i, j, nz)] + 9.0 * jyf[fineisnindex1(i, j, nz - 2)] - jyf[fineisnindex1(i, j, nz - 4)]) / 16.0;
-                jzf[fineisnindex1(i, j, nz - 1)] = (-jz_l + 9.0 * jzf[fineisnindex1(i, j, nz)] + 9.0 * jzf[fineisnindex1(i, j, nz - 2)] - jzf[fineisnindex1(i, j, nz - 4)]) / 16.0;
-                rhof[fineisnindex1(i, j, nz - 1)] = (-rho_l + 9.0 * rhof[fineisnindex1(i, j, nz)] + 9.0 * rhof[fineisnindex1(i, j, nz - 2)] - rhof[fineisnindex1(i, j, nz - 4)]) / 16.0;
+                // jxf[fineisnindex1(i, j, nz - 1)] = (-jx_l + 9.0 * jxf[fineisnindex1(i, j, nz)] + 9.0 * jxf[fineisnindex1(i, j, nz - 2)] - jxf[fineisnindex1(i, j, nz - 4)]) / 16.0;
+                // jyf[fineisnindex1(i, j, nz - 1)] = (-jy_l + 9.0 * jyf[fineisnindex1(i, j, nz)] + 9.0 * jyf[fineisnindex1(i, j, nz - 2)] - jyf[fineisnindex1(i, j, nz - 4)]) / 16.0;
+                // jzf[fineisnindex1(i, j, nz - 1)] = (-jz_l + 9.0 * jzf[fineisnindex1(i, j, nz)] + 9.0 * jzf[fineisnindex1(i, j, nz - 2)] - jzf[fineisnindex1(i, j, nz - 4)]) / 16.0;
+                // rhof[fineisnindex1(i, j, nz - 1)] = (-rho_l + 9.0 * rhof[fineisnindex1(i, j, nz)] + 9.0 * rhof[fineisnindex1(i, j, nz - 2)] - rhof[fineisnindex1(i, j, nz - 4)]) / 16.0;
 
-                u2 = jxf[fineisnindex1(i, j, nz - 1)] * jxf[fineisnindex1(i, j, nz - 1)] + jxf[fineisnindex1(i, j, nz - 1)] * jxf[fineisnindex1(i, j, nz - 1)] + jzf[fineisnindex1(i, j, nz - 1)] * jzf[fineisnindex1(i, j, nz - 1)];
+                // u2 = jxf[fineisnindex1(i, j, nz - 1)] * jxf[fineisnindex1(i, j, nz - 1)] + jxf[fineisnindex1(i, j, nz - 1)] * jxf[fineisnindex1(i, j, nz - 1)] + jzf[fineisnindex1(i, j, nz - 1)] * jzf[fineisnindex1(i, j, nz - 1)];
 
-                //****** Equilibrium distribution at i=1*******
-                for (a = 0; a < 19; a++)
-                {
-                    t = ex[a] * jxf[fineisnindex1(i, j, nz - 1)] + ey[a] * jyf[fineisnindex1(i, j, nz - 1)] + ez[a] * jzf[fineisnindex1(i, j, nz - 1)];
-                    feqf[fineindex(i, j, nz - 1, a)] = w[a] * rhof[fineisnindex1(i, j, nz - 1)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
-                }
+                // //****** Equilibrium distribution at i=1*******
+                // for (a = 0; a < 19; a++)
+                // {
+                //     t = ex[a] * jxf[fineisnindex1(i, j, nz - 1)] + ey[a] * jyf[fineisnindex1(i, j, nz - 1)] + ez[a] * jzf[fineisnindex1(i, j, nz - 1)];
+                //     feqf[fineindex(i, j, nz - 1, a)] = w[a] * rhof[fineisnindex1(i, j, nz - 1)] * (1 + 3 * t + 4.5 * t * t - 1.5 * u2);
+                // }
 
-                //*****Find Non-equilibrium distribution at i=1 using 4 point langrangian interpolation*******
-                for (a = 0; a < 19; a++)
-                {
-                    fneqf[a] = (-dist_neq_l[0][a] + 9.0 * dist_neq_l[1][a] + 9.0 * dist_neq_l[2][a] - dist_neq_l[3][a]) / 16.0;
-                }
+                // //*****Find Non-equilibrium distribution at i=1 using 4 point langrangian interpolation*******
+                // for (a = 0; a < 19; a++)
+                // {
+                //     fneqf[a] = (-dist_neq_l[0][a] + 9.0 * dist_neq_l[1][a] + 9.0 * dist_neq_l[2][a] - dist_neq_l[3][a]) / 16.0;
+                // }
 
                 //*****Find f = feq+fneq******
                 for (k = nz - 1, a = 0; a < 19; a++)
                 {
-                    ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf[a];
+                    // ff[fineindex(i, j, k, a)] = feqf[fineindex(i, j, k, a)] + fneqf[a];
+
+                    ff[fineindex(i, j, k, a)] = (-dist_l[a] + 9.0 * ff[fineindex(i, j, nz, a)] + 9.0 * ff[fineindex(i, j, nz - 2, a)] - ff[fineindex(i, j, nz - 4, a)]) / 16.0;
                 }
             }
         }
