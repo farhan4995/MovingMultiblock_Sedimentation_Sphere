@@ -1,0 +1,3 @@
+Sedimentation of a sphere
+In this code, all the interpolation will be done using direct interpolation of the distribution function using 
+p-point lagrangian interpolation of the inside fine-grid layer values. 
