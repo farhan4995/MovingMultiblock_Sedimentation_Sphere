@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-//#include <time.h>
+#include <time.h>
 
 const int NX = 200;
 const int NY = 200;
@@ -108,8 +108,8 @@ int main()
     double Df = D * alpha;                                     // Diameter in fine block
     int CX_I, CX_F, CY_I, CY_F, CZ_I, CZ_F;
 
-    // clock_t start, end;
-    // double cpu_time_used;
+    clock_t start, end;
+    double cpu_time_used;
 
     double M[19][19] = {
         {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0},
@@ -459,10 +459,10 @@ int main()
     out4 = fopen("LD_vs_time.dat", "w");
     FILE *out5;
     out5 = fopen("Fz_vs_time.dat", "w");
-    // FILE *time;
-    // time = fopen("Time_CPU", "w");
+    FILE *time;
+    time = fopen("Time_CPU", "w");
 
-    // start = clock();
+    start = clock();
     do
     {
         // ******** Streaming in the coarse block to get fc[a][n+1][] *********
@@ -1782,12 +1782,12 @@ fclose(out3);
         ts++;
     } while (CZ[1] >= 18.0);
 
-    /*   end = clock();
-       cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
-       fprintf(time, "CPU_time_used=%f\n", cpu_time_used);
-       fflush(time);
-   */
-    //   fclose(time);
+    end = clock();
+    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
+    fprintf(time, "CPU_time_used=%f\n", cpu_time_used);
+    fflush(time);
+
+    fclose(time);
     fclose(out1);
     fclose(out4);
     fclose(out5);
